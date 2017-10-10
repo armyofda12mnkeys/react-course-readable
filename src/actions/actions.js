@@ -15,6 +15,16 @@ export const DELETE_COMMENT = 'DELETE_COMMENT';
 export const CHANGE_CATEGORY = 'CHANGE_CATEGORY';
 export const GET_ALL_CATEGORIES = 'GET_ALL_CATEGORIES';
 
+
+export const TEST = 'TEST';
+export function test ({id}) {
+	return {
+		type: TEST,
+		id
+	}
+};
+
+
 /* CATEGORIES */
 export function changeCategory ({category}) {
 	return {
