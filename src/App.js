@@ -5,6 +5,17 @@ import {Route, Link} from 'react-router-dom'
 import * as ReadableAPI from './utils/ReadableAPI';
 
 class App extends Component {
+  
+  componentDidMount() {
+    //get all post and categories for the state
+    const {loadAllPosts, loadCategories} = this.props;
+    loadCategories();
+    loadAllPosts();
+  }
+
+  componentWillUnmount() {
+  }
+  
   render() {
     return (
       <div className="App">
@@ -15,13 +26,17 @@ class App extends Component {
         </header>
         
         <Route exact path="/" render={ () => (
-					<PostList myposts={this.state.myposts} />	
+          <div>Test</div>
 				)} />
         
-
       </div>
     );
   }
 }
 
-export default App;
+
+function mapStateToProps({posts, categories, filterByCategory, loadingData}) {
+  return {posts, categories, comments}
+}
+
+export default connect(mapStateToProps, {loadAllPosts, loadCategories})(App)

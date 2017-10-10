@@ -1,15 +1,13 @@
-import { combineReducers } from 'redux';
-
 import { 
 	CREATE_POST, 
 	EDIT_POST,
   VIEW_POST,
   VOTE_POST,
   DELETE_POST
-} from '../actions';
+} from '../actions/actions';
 
 
-function posts(state = {}, action) {
+function posts(state = [], action) {
   switch(action.type) {
     case CREATE_POST:
 

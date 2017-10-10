@@ -1,16 +1,14 @@
-import { combineReducers } from 'redux';
-
 import { 
-	CHANGE_CATEGORY
-} from '../actions';
+	GET_ALL_CATEGORIES
+} from '../actions/actions';
 
 
-function posts(state = {}, action) {
+function categories(state = [], action) {
   switch(action.type) {
-    case CHANGE_CATEGORY:
-
+    case GET_ALL_CATEGORIES:
 			return {
-        
+        ...state,
+        "categories": action.categories
 			};
       
  		default:
@@ -18,7 +16,7 @@ function posts(state = {}, action) {
   }
 };
 
-export default posts;
+export default categories;
 
 /*
 export default combineReducers({

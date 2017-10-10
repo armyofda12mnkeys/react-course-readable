@@ -1,3 +1,5 @@
+import * as ReadableAPI from '../utils/ReadableAPI';
+
 export const CREATE_POST = 'CREATE_POST';
 export const EDIT_POST = 'EDIT_POST';
 export const VIEW_POST = 'VIEW_POST';
@@ -11,6 +13,7 @@ export const VOTE_COMMENT = 'VOTE_COMMENT';
 export const DELETE_COMMENT = 'DELETE_COMMENT';
 
 export const CHANGE_CATEGORY = 'CHANGE_CATEGORY';
+export const GET_ALL_CATEGORIES = 'GET_ALL_CATEGORIES';
 
 /* CATEGORIES */
 export function changeCategory ({category}) {
@@ -19,6 +22,19 @@ export function changeCategory ({category}) {
 		category
 	}
 };
+
+export function getAllCategories ({categories}) {
+	return {
+		type: GET_ALL_CATEGORIES,
+		categories
+	}
+};
+export const asyncGetCategories = () => dispatch => (
+  ReadableAPI
+      .getAllCategories()
+      .then(categories => dispatch(getAllCategories(categories)))
+);
+
 
 /* POSTS */
 export function createPost ({id, timestamp, title, body, author, category}) {

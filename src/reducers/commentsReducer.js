@@ -1,15 +1,13 @@
-import { combineReducers } from 'redux';
-
 import { 
 	CREATE_COMMENT, 
 	EDIT_COMMENT,
   VIEW_COMMENT,
   VOTE_COMMENT,
   DELETE_COMMENT
-} from '../actions';
+} from '../actions/actions';
 
 
-function comments (state = {}, action) {
+function comments (state = [], action) {
   switch(action.type) {
     case CREATE_COMMENT:
 

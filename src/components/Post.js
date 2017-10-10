@@ -13,10 +13,12 @@ class Post extends React.Component {
         </div>
         
         <VoteCount count={props.voteScore} />
-        <UpDownVoter id={props.id} type="comment" />
+        <UpDownVoter id={props.id} type="post" />
         
         <button onClick="alert('Delete');">Delete</button>
         <button onClick="alert('Edit');">Edit</button>
+        
+        <CommentsList postId={this.props.uuid} />
       </div>
     );
   }
