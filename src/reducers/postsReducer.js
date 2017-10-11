@@ -1,4 +1,5 @@
 import { 
+  REQUEST_GET_POSTS, RECEIVE_GET_POSTS,
 	CREATE_POST, 
 	EDIT_POST,
   VIEW_POST,
@@ -7,13 +8,27 @@ import {
 } from '../actions/actions';
 
 
-function posts(state = [], action) {
+function posts(state = { isFetching: false, items: []}, action) {
   switch(action.type) {
+    
+    case REQUEST_GET_POSTS:
+			return {
+        ...state,
+        "isFetching": true
+			};
+      
+    case RECEIVE_GET_POSTS:
+			return {
+        ...state,
+        "isFetching": false,
+        "items":  action.posts
+			};
+      
     case CREATE_POST:
 
 			return {
         
-			};
+			};      
       
     case EDIT_POST:
 

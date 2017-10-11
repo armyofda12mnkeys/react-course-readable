@@ -4,7 +4,7 @@ import './App.css';
 import {Route, Link} from 'react-router-dom'
 import * as ReadableAPI from './utils/ReadableAPI';
 import { connect } from 'react-redux';
-import {test} from './actions/actions';
+import {test, fetchGetPosts, fetchGetAllCategories} from './actions/actions';
 import FaBeer from 'react-icons/lib/fa/beer';
 import FaArrowUp from 'react-icons/lib/fa/arrow-up';
 import FaArrowDown from 'react-icons/lib/fa/arrow-down';
@@ -16,7 +16,11 @@ class App extends Component {
     //const {loadAllPosts, loadCategories} = this.props;
     //loadCategories();
     //loadAllPosts();
-    this.props.boundChangeSort();
+
+    //this.props.boundChangeSort();
+    this.props.boundFetchGetPosts();
+    this.props.boundFetchGetAllCategories();
+    //console.log(posts);
   }
   componentWillUnmount() {
   }
@@ -55,7 +59,14 @@ function mapDispatchToProps(dispatch, ownProps) {
   return {
     boundChangeSort: () => { //not sure if need this, but adding in case need to figure this out
       dispatch(test('id-101'))
-    }
+    },
+    boundFetchGetPosts: () => {
+      dispatch(fetchGetPosts(''));
+    },
+    boundFetchGetAllCategories: () => {
+      dispatch(fetchGetAllCategories());
+    },
+    
   }
 }
 

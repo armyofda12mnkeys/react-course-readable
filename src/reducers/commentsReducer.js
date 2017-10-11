@@ -1,4 +1,5 @@
 import { 
+  REQUEST_GET_COMMENTS_FOR_POST, RECEIVE_GET_COMMENTS_FOR_POST,
 	CREATE_COMMENT, 
 	EDIT_COMMENT,
   VIEW_COMMENT,
@@ -7,18 +8,43 @@ import {
 } from '../actions/actions';
 
 
-function comments (state = [], action) {
+function comments (state = { ifFetching: false, items: []}, action) {
   switch(action.type) {
+    
+    
+    case REQUEST_GET_COMMENTS_FOR_POST:
+			return {
+        ...state,
+        "isFetching": true
+			};
+      
+    case RECEIVE_GET_COMMENTS_FOR_POST:
+			return {
+        ...state,
+        "isFetching": false,
+        "items":  action.comments
+			};
+      
     case CREATE_COMMENT:
 
 			return {
-        
+        ...state,
+        "isFetching": false,
+        "items":  [
+          ...state["items"],
+          action.comment
+        ]
 			};
       
     case EDIT_COMMENT:
 
 			return {
-        
+        ...state,
+        "isFetching": false,
+        "items":  [
+          ...state["items"],
+          action.comment
+        ]
 			};
       
     case VIEW_COMMENT:

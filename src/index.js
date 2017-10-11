@@ -20,7 +20,7 @@ import rootReducer from './reducers/reducers';
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(rootReducer,
   composeEnhancers(
-    applyMiddleware(logger, thunk)
+    applyMiddleware(thunk, logger)
   )
 );
 
@@ -28,7 +28,7 @@ console.log('initial state:', store.getState());
 // Every time the state changes, log it
 // Note that subscribe() returns a function for unregistering the listener
 let unsubscribe = store.subscribe(() =>
-  console.log(store.getState())
+  console.log('state change:',store.getState())
 );
 
 //########################################################################

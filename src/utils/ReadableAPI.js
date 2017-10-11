@@ -8,8 +8,8 @@ if (!token)
 
 const headers = {
   'Accept': 'application/json',
-  'Authorization': token,
-  'Content-Type': 'application/json'
+  'Authorization': 'anything',
+  'Content-Type': 'application/json'  
 }
 /*
 GET /categories
@@ -35,13 +35,15 @@ export const getAllCategories = () =>
   fetch(`${url}/categories`, { headers })
     .then(res => res.json());
 
-export const getAllPostsInCategory = (id) =>
-  fetch(`${url}/${id}/posts`, { headers })
+export const getPosts = (id) => {
+  if(id) {
+    return fetch(`${url}/${id}/posts`, { headers })
     .then(res => res.json());
-    
-export const getAllPosts = () =>
-  fetch(`${url}/posts`, { headers })
-    .then(res => res.json());
+  } else {
+    return fetch(`${url}/posts`, { headers })
+    .then(res => res.json());  
+  }  
+};
     
 export const createPost = (id, timestamp, title, body, author, category) =>
   fetch(`${url}/posts`, {
@@ -80,8 +82,7 @@ export const deletePost = (id) =>
     
 export const getCommentsForPost = (id) =>
   fetch(`${url}/posts/${id}/comments`, { headers })
-    .then(res => res.json())
-    .then(data => data.books)
+    .then(res => res.json());
 
 export const addCommentToPost = (id, timestamp, body, author, parentId) =>
   fetch(`${url}/comments`, {

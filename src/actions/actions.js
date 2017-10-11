@@ -1,5 +1,14 @@
 import * as ReadableAPI from '../utils/ReadableAPI';
 
+export const REQUEST_GET_ALL_CATEGORIES = 'REQUEST_GET_ALL_CATEGORIES';
+export const RECEIVE_GET_ALL_CATEGORIES = 'RECEIVE_GET_ALL_CATEGORIES';
+
+export const REQUEST_GET_POSTS = 'REQUEST_GET_POSTS';
+export const RECEIVE_GET_POSTS = 'RECEIVE_GET_POSTS';
+
+export const REQUEST_GET_COMMENTS_FOR_POST = 'REQUEST_GET_COMMENTS_FOR_POST';
+export const RECEIVE_GET_COMMENTS_FOR_POST = 'RECEIVE_GET_COMMENTS_FOR_POST';
+
 export const CREATE_POST = 'CREATE_POST';
 export const EDIT_POST = 'EDIT_POST';
 export const VIEW_POST = 'VIEW_POST';
@@ -13,7 +22,7 @@ export const VOTE_COMMENT = 'VOTE_COMMENT';
 export const DELETE_COMMENT = 'DELETE_COMMENT';
 
 export const CHANGE_CATEGORY = 'CHANGE_CATEGORY';
-export const GET_ALL_CATEGORIES = 'GET_ALL_CATEGORIES';
+
 
 
 export const TEST = 'TEST';
@@ -26,24 +35,96 @@ export function test ({id}) {
 
 
 /* CATEGORIES */
+/*
 export function changeCategory ({category}) {
 	return {
 		type: CHANGE_CATEGORY,
 		category
 	}
 };
+*/
 
-export function getAllCategories ({categories}) {
+export function requestGetAllCategories () {
 	return {
-		type: GET_ALL_CATEGORIES,
+		type: REQUEST_GET_ALL_CATEGORIES
+	}
+};
+export function receiveGetAllCategories ({categories}) {
+	return {
+		type: RECEIVE_GET_ALL_CATEGORIES,
 		categories
 	}
 };
-export const asyncGetCategories = () => dispatch => (
-  ReadableAPI
-      .getAllCategories()
-      .then(categories => dispatch(getAllCategories(categories)))
-);
+export function fetchGetAllCategories() { //example from reduct: store.dispatch(fetchPosts('reactjs'))
+  return function (dispatch) {
+    // First dispatch: the app state is updated to inform that the API call is starting.
+    dispatch(requestGetAllCategories());
+    
+    return ReadableAPI
+            .getAllCategories()
+            .then(categories => dispatch(receiveGetAllCategories({categories})));
+  }
+};
+
+
+
+
+export function requestGetPosts () {
+	return {
+		type: REQUEST_GET_POSTS
+	}
+};
+export function receiveGetPosts ({posts}) {
+	return {
+		type: RECEIVE_GET_POSTS,
+		posts
+	}
+};
+export function fetchGetPosts(category='') {
+  return function (dispatch, getState) {
+    dispatch(requestGetPosts());
+
+    return ReadableAPI.getPosts(category)
+            .then((posts) => {
+              console.log('Arian',posts);
+              dispatch(receiveGetPosts({posts}));               
+              console.log('Posts Length', posts.length);
+              posts.map((post) =>{
+                console.log('Posts:'+ post.id);
+                dispatch(fetchGetCommentsForPost({post_id: post.id}));
+              });
+            });
+  }
+};
+
+export function requestGetCommentsForPost () {
+	return {
+		type: REQUEST_GET_COMMENTS_FOR_POST,
+	}
+};
+export function receiveGetCommentsForPost ({comments}) {
+	return {
+		type: RECEIVE_GET_COMMENTS_FOR_POST,
+		comments
+	}
+};
+export function fetchGetCommentsForPost({post_id}) {
+  return function (dispatch, getState) {
+    dispatch(requestGetCommentsForPost());
+    
+    return ReadableAPI
+            .getCommentsForPost(post_id)
+            .then(comments => {
+              console.log('Comments',comments);
+              dispatch(receiveGetCommentsForPost({comments}));
+              //dispatch to get all comments those those posts? and build that array
+            });
+  }
+};
+
+
+
+
 
 
 /* POSTS */

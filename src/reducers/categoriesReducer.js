@@ -1,14 +1,23 @@
 import { 
-	GET_ALL_CATEGORIES
+	REQUEST_GET_ALL_CATEGORIES,
+  RECEIVE_GET_ALL_CATEGORIES
 } from '../actions/actions';
 
 
-function categories(state = [], action) {
+function categories(state = { ifFetching: false, items: []}, action) {
   switch(action.type) {
-    case GET_ALL_CATEGORIES:
+    
+    case REQUEST_GET_ALL_CATEGORIES:
 			return {
         ...state,
-        "categories": action.categories
+        "isFetching": true
+			};
+      
+    case RECEIVE_GET_ALL_CATEGORIES:
+			return {
+        ...state,
+        "isFetching": false,
+        "items":  action.categories
 			};
       
  		default:
