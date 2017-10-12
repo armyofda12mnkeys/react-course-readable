@@ -1,14 +1,21 @@
+import React from 'react';
+import Comment from './Comment';
+
 class CommentList extends React.Component {
+
   render() {
+    let comments = this.props.comments && [];
+    
     return (
       <div className="comment-list">
-      {{ 
-        comments.map( (comment)=>{
-          <Comment commentId={comment.id} />
-          <!-- or do i pass the whole comment in? .... hmm  for now just get access to main state and pull from store.comments -->
-        })
-      }}      
+        {{ 
+          comments.map( (comment)=>{
+            <Comment commentId={comment.id} />
+          })
+        }}  
       </div>
     );
   }
 }
+
+export default CommentList;

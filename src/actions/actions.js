@@ -60,9 +60,11 @@ export function fetchGetAllCategories() { //example from reduct: store.dispatch(
     // First dispatch: the app state is updated to inform that the API call is starting.
     dispatch(requestGetAllCategories());
     
-    return ReadableAPI
-            .getAllCategories()
-            .then(categories => dispatch(receiveGetAllCategories({categories})));
+    return ReadableAPI.getAllCategories()
+            .then(json => {
+              //console.log('cattt', json.categories);
+              dispatch(receiveGetAllCategories({categories: json.categories}));
+            });
   }
 };
 
@@ -86,12 +88,12 @@ export function fetchGetPosts(category='') {
 
     return ReadableAPI.getPosts(category)
             .then((posts) => {
-              console.log('Arian',posts);
+              //console.log('postsss',posts);
               dispatch(receiveGetPosts({posts}));               
-              console.log('Posts Length', posts.length);
+              //console.log('Posts Length', posts.length);
               posts.map((post) =>{
-                console.log('Posts:'+ post.id);
-                dispatch(fetchGetCommentsForPost({post_id: post.id}));
+                //console.log('Posts:'+ post.id);
+                return dispatch(fetchGetCommentsForPost({post_id: post.id}));
               });
             });
   }
@@ -115,7 +117,7 @@ export function fetchGetCommentsForPost({post_id}) {
     return ReadableAPI
             .getCommentsForPost(post_id)
             .then(comments => {
-              console.log('Comments',comments);
+              //console.log('Comments',comments);
               dispatch(receiveGetCommentsForPost({comments}));
               //dispatch to get all comments those those posts? and build that array
             });

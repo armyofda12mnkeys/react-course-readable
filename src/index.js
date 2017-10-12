@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import registerServiceWorker from './registerServiceWorker';
 //import {createPost} from './actions';
-import * as ReadableAPI from './utils/ReadableAPI';
+//import * as ReadableAPI from './utils/ReadableAPI';
 
 
 
@@ -27,9 +27,9 @@ const store = createStore(rootReducer,
 console.log('initial state:', store.getState());
 // Every time the state changes, log it
 // Note that subscribe() returns a function for unregistering the listener
-let unsubscribe = store.subscribe(() =>
+/*let unsubscribe = store.subscribe(() =>
   console.log('state change:',store.getState())
-);
+);*/
 
 //########################################################################
 /*

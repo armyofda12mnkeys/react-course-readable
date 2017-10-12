@@ -31,9 +31,10 @@ DELETE /comments/:id
 */
 
 
-export const getAllCategories = () =>
-  fetch(`${url}/categories`, { headers })
-    .then(res => res.json());
+export const getAllCategories = () => {
+  return fetch(`${url}/categories`, { headers })
+    .then(res => res.json())
+};
 
 export const getPosts = (id) => {
   if(id) {
