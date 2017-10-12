@@ -7,17 +7,21 @@ import { fetchVotePost, test } from '../actions/actions';
 
 class UpDownVoter extends React.Component {
   render() {
-    let postId = this.props.postId;
-    console.log('postId', postId);
+    let id = this.props.id;
+    console.log('UpDownVoter id', id);
     return (
       <div className="vote-score">
-        <FaArrowUp color='green' onClick={()=>{ this.props.boundPostVote(postId, 'upVote'); }} />
-        <FaArrowDown color='red' onClick={()=>{ this.props.boundPostVote(postId, 'downVote'); }} />
+        <FaArrowUp color='green' onClick={()=>{ this.props.boundVote(id, 'upVote'); }} />
+        <FaArrowDown color='red' onClick={()=>{ this.props.boundVote(id, 'downVote'); }} />
       </div>
     );
   }
+
 }
 
+export default UpDownVoter;
+
+/*
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     boundPostVote: (post_id, vote_option) => { //not sure if need this, but adding in case need to figure this out
@@ -31,3 +35,4 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 
 //export default UpDownVoter;
 export default withRouter(connect(null, mapDispatchToProps)(UpDownVoter));
+*/

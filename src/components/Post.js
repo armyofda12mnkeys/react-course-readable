@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 //import VoteCount from './VoteCount';
-import UpDownVoter from './UpDownVoter';
-
+//import UpDownVoter from './UpDownVoter';
+import UpDownVoterPostContainer from './UpDownVoterPostContainer';
 
 class Post extends React.Component {  
   
@@ -33,7 +33,7 @@ class Post extends React.Component {
         <div className="post-vote-score">
           <strong>post vote score:</strong> {post.voteScore}
         </div>
-        <UpDownVoter postId={post.id} type="post" onVoteClick={()=>alert('test')} />
+        <UpDownVoterPostContainer id={post.id} type="post" />
         <div className="post-comments-count">
           <strong># of comments:</strong> {comment_count}
         </div>
