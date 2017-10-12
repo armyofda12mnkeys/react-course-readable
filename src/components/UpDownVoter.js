@@ -8,7 +8,7 @@ import { fetchVotePost, test } from '../actions/actions';
 class UpDownVoter extends React.Component {
   render() {
     let id = this.props.id;
-    console.log('UpDownVoter id', id);
+    console.log('UpDownVoter id for type "'+this.props.type+'":', id);
     return (
       <div className="vote-score">
         <FaArrowUp color='green' onClick={()=>{ this.props.boundVote(id, 'upVote'); }} />

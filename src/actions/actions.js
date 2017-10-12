@@ -146,6 +146,10 @@ export function fetchVotePost({post_id, vote_option}) {
 
 
 
+
+
+
+
 /* POSTS */
 export function createPost ({id, timestamp, title, body, author, category}) {
 	return {
@@ -201,11 +205,24 @@ export function viewComment ({id}) {
 	}
 };
 
-export function voteComment ({id, option}) {
+export function recievedVoteComment ({updated_comment}) {
 	return {
 		type: VOTE_COMMENT,
-		id, option
+		updated_comment
 	}
+};
+export function fetchVoteComment({comment_id, vote_option}) {
+  console.log('comment'+ comment_id +','+ vote_option);
+  return function (dispatch, getState) {
+    //dispatch(requestVotePost());
+    
+    return ReadableAPI
+            .voteComment(comment_id, vote_option)
+            .then(updated_comment => {
+              console.log('updated_comment',updated_comment);
+              dispatch(recievedVoteComment({updated_comment}));              
+            });
+  }
 };
 
 export function deleteComment ({id}) {

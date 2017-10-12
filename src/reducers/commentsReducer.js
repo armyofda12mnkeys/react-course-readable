@@ -55,9 +55,18 @@ function comments (state = { ifFetching: false, items: []}, action) {
       
     case VIEW_COMMENT:
 
+      let newcommentitems = state.items;
+      newcommentitems = newcommentitems.map((comment)=> {
+        if(comment.id === action.updated_comment.id){
+           return action.updated_comment; //return the updated post instead (or change just the voteScore prop manually)
+        }
+        return comment;
+      });
 			return {
-        
-			};
+         ...state,
+        "isFetching": false,
+        "items":  newcommentitems
+      };
       
     case VOTE_COMMENT:
 
