@@ -19,11 +19,17 @@ function comments (state = { ifFetching: false, items: []}, action) {
 			};
       
     case RECEIVE_GET_COMMENTS_FOR_POST:
+      //console.log('actioncomments', action.comments);
+      //let newarray = [...state["items"], ...action.comments];      
 			return {
         ...state,
         "isFetching": false,
-        "items":  action.comments
+        "items": [
+          ...state["items"],
+          ...action.comments
+        ] 
 			};
+
       
     case CREATE_COMMENT:
 
