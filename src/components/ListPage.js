@@ -65,9 +65,11 @@ function mapStateToProps({posts, comments, categories}, ownProps) {
 }
 function mapDispatchToProps(dispatch, ownProps) {
   return {
+    /*
     boundChangeSort: () => { //not sure if need this, but adding in case need to figure this out
       dispatch(test('id-101'))
     },
+    */
     boundFetchGetPosts: () => {
       dispatch(fetchGetPosts(''));
     },

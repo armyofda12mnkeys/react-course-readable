@@ -60,7 +60,7 @@ export const getPost = (id) =>
 export const votePost = (id, option) =>
   fetch(`${url}/posts/${id}`, {
     method: 'POST',
-    headers: { headers },
+    headers: headers,
     body: JSON.stringify({ option })
   }).then(res => res.json());
     

@@ -11,7 +11,7 @@ class Post extends React.Component {
   render() {
     let post = this.props.post;
     let comment_count = this.props.post_comments && this.props.post_comments.length;
-    console.log('this.props.post_comments',this.props.post_comments);
+    //console.log('this.props.post_comments',this.props.post_comments);
     
     return (
       <div className="post">
@@ -33,7 +33,7 @@ class Post extends React.Component {
         <div className="post-vote-score">
           <strong>post vote score:</strong> {post.voteScore}
         </div>
-        <UpDownVoter id={post.id} type="post" onVoteClick={()=>alert('test')} />
+        <UpDownVoter postId={post.id} type="post" onVoteClick={()=>alert('test')} />
         <div className="post-comments-count">
           <strong># of comments:</strong> {comment_count}
         </div>
@@ -48,10 +48,10 @@ class Post extends React.Component {
   }
 }
   const filterCommentsForThisPost = (comments, id)  => {
-     console.log('comments',comments);
+     //console.log('comments',comments);
      //console.log('id',id);
      let filteredComments = comments.filter((comment)=> (comment.parentId===id) );
-     console.log('filteredComments',filteredComments.length, filteredComments);
+     //console.log('filteredComments',filteredComments.length, filteredComments);
      return filteredComments;
   }
   
@@ -60,11 +60,9 @@ const mapStateToProps = (state,ownProps) => {
     post_comments: filterCommentsForThisPost(state.comments.items, ownProps.post.id)
   }
 }
-const mapDispatchToProps = dispatch => {
-  return {};
-};
+
 //export default Post;
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Post));
+export default withRouter(connect(mapStateToProps, null)(Post));
 /*
 
 <VoteCount count={post.voteScore} />

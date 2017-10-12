@@ -23,6 +23,26 @@ function posts(state = { isFetching: false, items: []}, action) {
         "isFetching": false,
         "items":  action.posts
 			};
+
+    case VOTE_POST:
+      let newpostitems = state.items;
+      newpostitems = newpostitems.map((post)=> {
+        if(post.id === action.updated_post.id){
+           return action.updated_post; //return the updated post instead (or change just the voteScore prop manually)
+        }
+        return post;
+      });
+			return {
+         ...state,
+        "isFetching": false,
+        "items":  newpostitems
+      };
+      
+    case VIEW_POST:
+
+			return {
+        
+			};
       
     case CREATE_POST:
 
@@ -36,18 +56,6 @@ function posts(state = { isFetching: false, items: []}, action) {
         
 			};
       
-    case VIEW_POST:
-
-			return {
-        
-			};
-      
-    case VOTE_POST:
-
-			return {
-        
-			};
-
     case DELETE_POST:
 
 			return {

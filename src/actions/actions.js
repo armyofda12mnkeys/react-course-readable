@@ -124,8 +124,25 @@ export function fetchGetCommentsForPost({post_id}) {
   }
 };
 
-
-
+export function recievedVotePost ({updated_post}) {
+	return {
+		type: VOTE_POST,
+		updated_post
+	}
+};
+export function fetchVotePost({post_id, vote_option}) {
+  console.log('post'+ post_id +','+ vote_option);
+  return function (dispatch, getState) {
+    //dispatch(requestVotePost());
+    
+    return ReadableAPI
+            .votePost(post_id, vote_option)
+            .then(updated_post => {
+              console.log('updated_post',updated_post);
+              dispatch(recievedVotePost({updated_post}));              
+            });
+  }
+};
 
 
 
@@ -152,12 +169,7 @@ export function viewPost ({id}) {
 	}
 };
 
-export function votePost ({id, option}) {
-	return {
-		type: VOTE_POST,
-		id, option
-	}
-};
+
 
 export function deletePost ({id}) {
 	return {
