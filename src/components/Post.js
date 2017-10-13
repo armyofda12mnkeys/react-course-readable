@@ -15,10 +15,11 @@ class Post extends React.Component {
     let post = this.props.post;
     console.log('post...',post);
     //console.log('props',this.props.post.body);
-    let comment_count = this.props.post_comments && this.props.post_comments.length;
-    //console.log('this.props.post_comments',this.props.post_comments);
-    let boundDeletePost = this.props.boundDeletePost;
     let post_comments = this.props.post_comments;
+    let comment_count = post_comments && post_comments.length;
+    console.log('render',post_comments);
+    let boundDeletePost = this.props.boundDeletePost;
+    
     
     return (
       <div className="post">
@@ -54,13 +55,14 @@ class Post extends React.Component {
           ''
         }
         {/*or <Link to={post.category+'/'+post.id}>View</Link>*/}
-        
+                
         { this.props.view==='full' 
         ?
         <div className="post-comments">
           <strong>Comments:</strong> 
-          {post_comments.map((comment) => {
-            <div className="comment">
+          {comment_count===0 ? 'None Yet' : ''}
+          {post_comments && post_comments.map((comment) => (
+            <div className="comment" key={comment.id}>
               <div className="comment-id">
                 <strong>Comment id:</strong> {comment.id}
               </div>
@@ -74,7 +76,7 @@ class Post extends React.Component {
                 <strong>Comment id:</strong> {comment.voteScore}
               </div>
             </div>
-          })}
+          ))}
         </div>
         :
         ''
@@ -86,14 +88,16 @@ class Post extends React.Component {
 
 
 const filterCommentsForThisPost = (comments, id)  => {
-   console.log('comments',comments);
-   console.log('id',id);
+   //console.log('comments',comments);
+   //console.log('id',id);
    let filteredComments = comments.filter((comment)=> (comment.parentId===id) );
-   //console.log('filteredComments',filteredComments.length, filteredComments);
+   console.log('filteredComments',filteredComments);
    return filteredComments;
 }
   
 const mapStateToProps = (state,ownProps) => {
+  console.log('comments-post',state.comments.items);
+  console.log('comments-post',ownProps.post.id);
   return {
     post_comments: filterCommentsForThisPost(state.comments.items, ownProps.post.id)
   }
@@ -103,10 +107,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     boundDeletePost: (post_id) => {
       console.log('deleting post:', post_id);
-      dispatch(fetchDeletePost({post_id}));
-       if(ownProps.view==='full') {
+      dispatch(fetchDeletePost({post_id, view: ownProps.view}));
+       /*if(ownProps.view==='full') {
         ownProps.history.push('/');
-       }
+       }*/
       //dispatch(test('id-101'));
     }
   }

@@ -8,7 +8,7 @@ import { BrowserRouter } from 'react-router-dom';
 import registerServiceWorker from './registerServiceWorker';
 //import {createPost} from './actions';
 //import * as ReadableAPI from './utils/ReadableAPI';
-import { routerMiddleware } from 'react-router-redux';
+import { ConnectedRouter, routerMiddleware } from 'react-router-redux';
 import createHistory from 'history/createBrowserHistory';
 
 //########################################################################
@@ -18,7 +18,7 @@ import logger from 'redux-logger';
 import rootReducer from './reducers/reducers';
 
 
-export const history = createHistory();
+const history = createHistory();
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(rootReducer,
@@ -75,9 +75,9 @@ console.log( api_data );
 //########################################################################
 
 ReactDOM.render(<Provider store={store}>
-                  <BrowserRouter>
+                  <ConnectedRouter history={history}>
                     <App />
-                  </BrowserRouter>
+                  </ConnectedRouter>
                 </Provider>
 , document.getElementById('root'));
 registerServiceWorker();

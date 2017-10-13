@@ -11,7 +11,7 @@ class ViewPostPage extends React.Component {
     let post = this.props.post;
     
     return (
-      <div className="post">
+      <div className="single-post-view">
       {
         //not sure why this needed here for the ViewPostPage, can someone elaborate
         post

@@ -181,7 +181,7 @@ export function recievedDeletePost ({updated_post}) {
 		updated_post
 	}
 };
-export function fetchDeletePost({post_id}) {
+export function fetchDeletePost({post_id, view}) {
   console.log('post_id'+ post_id);
   return function (dispatch, getState) {
     //dispatch(requestVotePost());
@@ -192,7 +192,9 @@ export function fetchDeletePost({post_id}) {
               console.log('updated_post',updated_post);
               dispatch(recievedDeletePost({updated_post}));
               dispatch(deleteCommentsForPost({'post_id': updated_post.id}));
-              //dispatch(push('/')); //not working???
+              if(view==='full'){
+                dispatch(push('/')); //not working??? maybe fixed with 5.alpha version of redux-router
+              }
               //or loop through and do deleteComment() for each one somewhere?
             });
   }
