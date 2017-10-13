@@ -5,7 +5,7 @@ import {Route, Link, NavLink} from 'react-router-dom'
 //import * as ReadableAPI from './utils/ReadableAPI';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import ListPage from './components/ListPage';
+import ListPostsPage from './components/ListPostsPage';
 import {test, fetchGetPosts, fetchGetAllCategories} from './actions/actions';
 
 class App extends Component {
@@ -34,9 +34,9 @@ class App extends Component {
           <h1 className="App-title">Welcome to Readable</h1>
         </header>
         
-        <Route exact path="/:category?" component={ListPage} />
-        <Route exact path="/:category/:post_id" component={ListPage} />{/*ViewPostPage*/}
-        <Route exact path="/:category/:post_id/edit" component={ListPage} />{/*EditPostPage*/}
+        <Route exact path="/:category?" component={ListPostsPage} />
+        <Route exact path="/:category/:post_id" component={ListPostsPage} />{/*ViewPostPage*/}
+        <Route exact path="/:category/:post_id/edit" component={ListPostsPage} />{/*EditPostPage*/}
         
       </div>
     );

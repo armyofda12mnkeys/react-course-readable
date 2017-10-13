@@ -7,7 +7,7 @@ import PostList from './PostList';
 import SortBy from './SortBy';
 import {postsHelperSort} from '../utils/helpers';
 
-class ListPage extends React.Component {
+class ListPostsPage extends React.Component {
   
   componentDidMount() {
   }
@@ -61,4 +61,4 @@ function mapStateToProps({posts, comments, categories, ui}, ownProps) {
 }
 
 
-export default withRouter(connect(mapStateToProps, null)(ListPage));
+export default withRouter(connect(mapStateToProps, null)(ListPostsPage));
