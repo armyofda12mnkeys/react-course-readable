@@ -47,8 +47,13 @@ function posts(state = { isFetching: false, items: []}, action) {
     case CREATE_POST:
 
 			return {
-        
-			};      
+        ...state,
+        "isFetching": false,
+        "items":  [
+          ...state.items,
+          action.created_post
+        ]
+			};
       
     case EDIT_POST:
 

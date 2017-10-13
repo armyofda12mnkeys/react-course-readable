@@ -151,11 +151,25 @@ export function fetchVotePost({post_id, vote_option}) {
 
 
 /* POSTS */
-export function createPost ({id, timestamp, title, body, author, category}) {
+export function recievedCreatePost ({created_post}) {
 	return {
 		type: CREATE_POST,
-		id, timestamp, title, body, author, category
+		created_post
 	}
+};
+export function fetchCreatePost({id, timestamp, title, body, author, category}) {
+  console.log('post', id, timestamp, title, body, author, category);
+  return function (dispatch, getState) {
+    //dispatch(requestVotePost());
+    
+    return ReadableAPI
+            .createPost(id, timestamp, title, body, author, category)
+            .then(created_post => {
+              console.log('created_post',created_post);
+              dispatch(recievedCreatePost({created_post}));              
+              dispatch(push('/'+category+'/'+id));
+            });
+  }
 };
 
 export function editPost ({id, title, body}) {

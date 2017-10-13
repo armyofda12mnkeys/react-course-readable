@@ -49,7 +49,7 @@ export const getPosts = (id) => {
 export const createPost = (id, timestamp, title, body, author, category) =>
   fetch(`${url}/posts`, {
     method: 'POST',
-    headers: { headers },
+    headers: headers,
     body: JSON.stringify({ id, timestamp, title, body, author, category })
   }).then(res => res.json());
 
