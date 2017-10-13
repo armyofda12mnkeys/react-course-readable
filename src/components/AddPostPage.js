@@ -73,7 +73,9 @@ class AddPostPage extends LinkedComponent {
 }
 
 //export default ViewPostPage;
-function mapStateToProps({categories}, ownProps) {    
+function mapStateToProps({categories}, ownProps) {
+  //possible preload the state here from the server if its an edit page
+  //set a new var to say whether its an edit or add page and use that to determine which to use boundCreatePost or boundUpdatePost
   return {categories};
 }
 
