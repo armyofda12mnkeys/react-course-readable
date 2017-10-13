@@ -25,8 +25,8 @@ function posts(state = { isFetching: false, items: []}, action) {
 			};
 
     case VOTE_POST:
-      let newpostitems = state.items;
-      newpostitems = newpostitems.map((post)=> {
+      var newpostitems = state.items;
+      newpostitems = newpostitems.map((post) => {
         if(post.id === action.updated_post.id){
            return action.updated_post; //return the updated post instead (or change just the voteScore prop manually)
         }
@@ -57,10 +57,18 @@ function posts(state = { isFetching: false, items: []}, action) {
 			};
       
     case DELETE_POST:
-
-			return {
+      if(action.updated_post.deleted === true) { //doublecheck and make sure post got deleted from server response
+        var newpostitems = state.items;
+        newpostitems = newpostitems.filter( (post) => (post.id !== action.updated_post.id) );
         
-			};
+        return {
+           ...state,
+          "isFetching": false,
+          "items":  newpostitems
+        };
+      } else { //some issue with deleting from server maybe
+        return state;
+      }
       
 		default:
 			return state;

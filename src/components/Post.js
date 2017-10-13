@@ -4,6 +4,8 @@ import { withRouter } from 'react-router-dom';
 //import VoteCount from './VoteCount';
 //import UpDownVoter from './UpDownVoter';
 import UpDownVoterPostContainer from './UpDownVoterPostContainer';
+import {fetchDeletePost} from '../actions/actions';
+
 
 class Post extends React.Component {  
   
@@ -12,6 +14,7 @@ class Post extends React.Component {
     let post = this.props.post;
     let comment_count = this.props.post_comments && this.props.post_comments.length;
     //console.log('this.props.post_comments',this.props.post_comments);
+    let boundDeletePost = this.props.boundDeletePost;
     
     return (
       <div className="post">
@@ -40,7 +43,7 @@ class Post extends React.Component {
         
         
         <button onClick={()=>{ alert('Edit'); }}>Edit</button>
-        <button onClick={()=>{ alert('Delete'); }}>Delete</button>
+        <button onClick={()=>{ boundDeletePost(post.id); }}>Delete</button>
         <button onClick={()=>{ alert('View'); }}>View</button>
         
       </div>
@@ -61,8 +64,18 @@ const mapStateToProps = (state,ownProps) => {
   }
 }
 
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    boundDeletePost: (post_id) => {
+      console.log('deleting post:', post_id);
+      dispatch(fetchDeletePost({post_id}));
+      //dispatch(test('id-101'));
+    }
+  }
+};
+
 //export default Post;
-export default withRouter(connect(mapStateToProps, null)(Post));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Post));
 /*
 
 <VoteCount count={post.voteScore} />

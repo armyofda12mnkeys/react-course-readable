@@ -4,7 +4,7 @@ import {
 	EDIT_COMMENT,
   VIEW_COMMENT,
   VOTE_COMMENT,
-  DELETE_COMMENT
+  DELETE_COMMENTS_FOR_POST
 } from '../actions/actions';
 
 
@@ -55,7 +55,7 @@ function comments (state = { ifFetching: false, items: []}, action) {
       
     case VIEW_COMMENT:
 
-      let newcommentitems = state.items;
+      var newcommentitems = state.items;
       newcommentitems = newcommentitems.map((comment)=> {
         if(comment.id === action.updated_comment.id){
            return action.updated_comment; //return the updated post instead (or change just the voteScore prop manually)
@@ -74,10 +74,18 @@ function comments (state = { ifFetching: false, items: []}, action) {
         
 			};
 
-    case DELETE_COMMENT:
-
+    case DELETE_COMMENTS_FOR_POST:    
+    
+      var newcommentitems = state.items;
+      newcommentitems = newcommentitems.filter((comment)=> {
+        if(comment.parentId !== action.post_id){
+           return comment; //return this comment if not equal to the one to delete
+        }
+      });
+      
 			return {
-        
+        ...state,
+        "items": newcommentitems
 			};
       
 		default:

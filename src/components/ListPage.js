@@ -5,6 +5,7 @@ import {Route, Link, NavLink} from 'react-router-dom';
 import {test, fetchGetPosts, fetchGetAllCategories} from '../actions/actions';
 import PostList from './PostList';
 import SortBy from './SortBy';
+import {postsHelperSort} from '../utils/helpers';
 
 class ListPage extends React.Component {
   
@@ -55,12 +56,16 @@ class ListPage extends React.Component {
   }
 }
 
-function mapStateToProps({posts, comments, categories}, ownProps) {
+function mapStateToProps({posts, comments, categories, ui}, ownProps) {
   let category = ownProps.match.params.category || ''; 
   let filteredPosts = {...posts};
+  //filter by category or all posts
   if(category!='') {
     filteredPosts.items = filteredPosts.items.filter((post) => post.category===category );
   }
+  //filter/sort the list by the sort by chosen
+  filteredPosts.items = postsHelperSort(filteredPosts.items, ui.orderBy);  
+  
   return {posts, comments, categories, filteredPosts, category};
 }
 function mapDispatchToProps(dispatch, ownProps) {

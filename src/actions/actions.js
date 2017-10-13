@@ -19,11 +19,10 @@ export const CREATE_COMMENT = 'CREATE_COMMENT';
 export const EDIT_COMMENT = 'EDIT_COMMENT';
 export const VIEW_COMMENT = 'VIEW_COMMENT';
 export const VOTE_COMMENT = 'VOTE_COMMENT';
-export const DELETE_COMMENT = 'DELETE_COMMENT';
-
-export const CHANGE_CATEGORY = 'CHANGE_CATEGORY';
+export const DELETE_COMMENTS_FOR_POST = 'DELETE_COMMENTS_FOR_POST';
 
 
+export const CHANGE_POST_LIST_SORT_BY_ORDER = 'CHANGE_POST_LIST_SORT_BY_ORDER';
 
 export const TEST = 'TEST';
 export function test ({id}) {
@@ -35,14 +34,6 @@ export function test ({id}) {
 
 
 /* CATEGORIES */
-/*
-export function changeCategory ({category}) {
-	return {
-		type: CHANGE_CATEGORY,
-		category
-	}
-};
-*/
 
 export function requestGetAllCategories () {
 	return {
@@ -68,9 +59,17 @@ export function fetchGetAllCategories() { //example from reduct: store.dispatch(
   }
 };
 
+/* UI */
+export function changePostOrder ({orderBy}) {
+	return {
+		type: CHANGE_POST_LIST_SORT_BY_ORDER,
+		order_by: orderBy
+	}
+};
 
 
 
+/* POSTS */
 export function requestGetPosts () {
 	return {
 		type: REQUEST_GET_POSTS
@@ -175,11 +174,26 @@ export function viewPost ({id}) {
 
 
 
-export function deletePost ({id}) {
+export function recievedDeletePost ({updated_post}) {
 	return {
 		type: DELETE_POST,
-		id
+		updated_post
 	}
+};
+export function fetchDeletePost({post_id}) {
+  console.log('post_id'+ post_id);
+  return function (dispatch, getState) {
+    //dispatch(requestVotePost());
+    
+    return ReadableAPI
+            .deletePost(post_id)
+            .then(updated_post => {
+              console.log('updated_post',updated_post);
+              dispatch(recievedDeletePost({updated_post}));
+              dispatch(deleteCommentsForPost({'post_id': updated_post.id}));
+              //or loop through and do deleteComment() for each one somewhere?
+            });
+  }
 };
 
 
@@ -225,9 +239,9 @@ export function fetchVoteComment({comment_id, vote_option}) {
   }
 };
 
-export function deleteComment ({id}) {
+export function deleteCommentsForPost ({post_id}) {
 	return {
-		type: DELETE_COMMENT,
-		id
+		type: DELETE_COMMENTS_FOR_POST,
+		post_id
 	}
 };
