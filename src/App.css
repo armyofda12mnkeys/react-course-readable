@@ -32,7 +32,13 @@
 
 
 
-
+.header-link{
+  color: white;
+  text-decoration: none;
+}
+.header-link:hover {
+  text-decoration: underline;
+}
 
 .post, .comment {  
   border: 1px solid black;

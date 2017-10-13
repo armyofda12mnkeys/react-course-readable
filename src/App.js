@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import ListPostsPage from './components/ListPostsPage';
 import ViewPostPage from './components/ViewPostPage';
+import EditPostPage from './components/EditPostPage';
 import {test, fetchGetPosts, fetchGetAllCategories} from './actions/actions';
 
 class App extends Component {
@@ -30,14 +31,13 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          {/*<NavLink to={"/"}>HOME POST LISTING</NavLink>*/}
           {/*<img src={logo} className="App-logo" alt="logo" />*/}
-          <h1 className="App-title">Welcome to Readable</h1>
+          <NavLink className="header-link" to={"/"}><h1 className="App-title">Welcome to Readable</h1></NavLink>
         </header>
         
         <Route exact path="/:category?" component={ListPostsPage} />
         <Route exact path="/:category/:post_id" component={ViewPostPage} />
-        <Route exact path="/:category/:post_id/edit" component={ListPostsPage} />{/*EditPostPage*/}
+        <Route exact path="/:category/:post_id/edit" component={EditPostPage} />
         
       </div>
     );

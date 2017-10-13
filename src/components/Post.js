@@ -47,11 +47,11 @@ class Post extends React.Component {
           <strong># of comments:</strong> {comment_count}
         </div>
         
-        <button onClick={()=>{ alert('Edit'); }}>Edit</button>
-        <button onClick={()=>{ boundDeletePost(post.id); }}>Delete</button>
+        <button onClick={()=>{ window.location.href = '/'+post.category+'/'+post.id+'/edit'; }}>Edit Post</button>
+        <button onClick={()=>{ boundDeletePost(post.id); }}>Delete Post</button>
         { this.props.view==='teaser' 
           ?          
-          <button onClick={()=>{ window.location.href = post.category+'/'+post.id; }}>View</button>
+          <button onClick={()=>{ window.location.href = '/'+post.category+'/'+post.id; }}>View Post</button>
           :
           ''
         }
@@ -60,7 +60,7 @@ class Post extends React.Component {
         { this.props.view==='full' 
         ?
         <div className="post-comments">
-          <strong>Comments:</strong> 
+          <strong>Comments:</strong>           
           {comment_count===0 ? 'None Yet' : ''}
           {post_comments && post_comments.map((comment) => (
             <div className="comment" key={comment.id}>
@@ -78,8 +78,11 @@ class Post extends React.Component {
               </div>
               <UpDownVoterCommentContainer id={comment.id} type="comment" />
               
+              <button onClick={()=>{ alert('Edit Comment'); }}>Edit Comment</button>
+              <button onClick={()=>{ alert('Delete Comment'); }}>Delete Comment</button>
             </div>
           ))}
+          <button onClick={()=>{ alert('Add new Comment'); }}>Add New Comment</button>
         </div>
         :
         ''
