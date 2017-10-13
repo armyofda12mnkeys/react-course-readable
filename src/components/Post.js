@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 //import VoteCount from './VoteCount';
 //import UpDownVoter from './UpDownVoter';
 import UpDownVoterPostContainer from './UpDownVoterPostContainer';
+import UpDownVoterCommentContainer from './UpDownVoterCommentContainer'; //see if can combine into 1 Container?
 import {Link, NavLink} from 'react-router-dom';
 import {fetchDeletePost} from '../actions/actions';
 
@@ -73,8 +74,10 @@ class Post extends React.Component {
                 <strong>Comment body:</strong> {comment.body}
               </div>            
               <div className="comment-score">
-                <strong>Comment id:</strong> {comment.voteScore}
+                <strong>Comment vote score:</strong> {comment.voteScore}
               </div>
+              <UpDownVoterCommentContainer id={comment.id} type="comment" />
+              
             </div>
           ))}
         </div>

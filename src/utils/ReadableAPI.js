@@ -99,7 +99,7 @@ export const getComment = (id) =>
 export const voteComment = (id, option) =>
   fetch(`${url}/comments/${id}`, {
     method: 'POST',
-    headers: { headers },
+    headers: headers,
     body: JSON.stringify({ option })
   }).then(res => res.json());
     
