@@ -8,12 +8,11 @@ class PostList extends React.Component {
   render() {
     let filteredPosts = this.props.posts;
     
-    
     return (
       <div className="post-list">
         Post Count:{filteredPosts.items.length}
         {filteredPosts && filteredPosts.items.map((post) => (
-            <Post key={post.id} post={post} />
+            <Post key={post.id} post={post} view="teaser" />
         ))}
       </div>
     );

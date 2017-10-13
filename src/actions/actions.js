@@ -1,4 +1,5 @@
 import * as ReadableAPI from '../utils/ReadableAPI';
+import { push } from 'react-router-redux';
 
 export const REQUEST_GET_ALL_CATEGORIES = 'REQUEST_GET_ALL_CATEGORIES';
 export const RECEIVE_GET_ALL_CATEGORIES = 'RECEIVE_GET_ALL_CATEGORIES';
@@ -191,6 +192,7 @@ export function fetchDeletePost({post_id}) {
               console.log('updated_post',updated_post);
               dispatch(recievedDeletePost({updated_post}));
               dispatch(deleteCommentsForPost({'post_id': updated_post.id}));
+              //dispatch(push('/')); //not working???
               //or loop through and do deleteComment() for each one somewhere?
             });
   }

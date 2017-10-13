@@ -8,8 +8,8 @@ import { BrowserRouter } from 'react-router-dom';
 import registerServiceWorker from './registerServiceWorker';
 //import {createPost} from './actions';
 //import * as ReadableAPI from './utils/ReadableAPI';
-
-
+import { routerMiddleware } from 'react-router-redux';
+import createHistory from 'history/createBrowserHistory';
 
 //########################################################################
 import { createStore, applyMiddleware, compose } from 'redux';
@@ -17,10 +17,13 @@ import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 import rootReducer from './reducers/reducers';
 
+
+export const history = createHistory();
+
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(rootReducer,
   composeEnhancers(
-    applyMiddleware(thunk, logger)
+    applyMiddleware(thunk, routerMiddleware(history)) //, logger
   )
 );
 
@@ -78,3 +81,4 @@ ReactDOM.render(<Provider store={store}>
                 </Provider>
 , document.getElementById('root'));
 registerServiceWorker();
+ 

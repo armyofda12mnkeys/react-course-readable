@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 //import VoteCount from './VoteCount';
 //import UpDownVoter from './UpDownVoter';
 import UpDownVoterPostContainer from './UpDownVoterPostContainer';
+import {Link, NavLink} from 'react-router-dom';
 import {fetchDeletePost} from '../actions/actions';
 
 
@@ -12,9 +13,12 @@ class Post extends React.Component {
 
   render() {
     let post = this.props.post;
+    console.log('post...',post);
+    //console.log('props',this.props.post.body);
     let comment_count = this.props.post_comments && this.props.post_comments.length;
     //console.log('this.props.post_comments',this.props.post_comments);
     let boundDeletePost = this.props.boundDeletePost;
+    let post_comments = this.props.post_comments;
     
     return (
       <div className="post">
@@ -41,22 +45,53 @@ class Post extends React.Component {
           <strong># of comments:</strong> {comment_count}
         </div>
         
-        
         <button onClick={()=>{ alert('Edit'); }}>Edit</button>
         <button onClick={()=>{ boundDeletePost(post.id); }}>Delete</button>
-        <button onClick={()=>{ alert('View'); }}>View</button>
+        { this.props.view==='teaser' 
+          ?          
+          <button onClick={()=>{ window.location.href = post.category+'/'+post.id; }}>View</button>
+          :
+          ''
+        }
+        {/*or <Link to={post.category+'/'+post.id}>View</Link>*/}
         
+        { this.props.view==='full' 
+        ?
+        <div className="post-comments">
+          <strong>Comments:</strong> 
+          {post_comments.map((comment) => {
+            <div className="comment">
+              <div className="comment-id">
+                <strong>Comment id:</strong> {comment.id}
+              </div>
+              <div className="comment-author">
+                <strong>Comment author:</strong> {comment.author}
+              </div>
+              <div className="comment-body">
+                <strong>Comment body:</strong> {comment.body}
+              </div>            
+              <div className="comment-score">
+                <strong>Comment id:</strong> {comment.voteScore}
+              </div>
+            </div>
+          })}
+        </div>
+        :
+        ''
+        }
       </div>
     );
   }
 }
-  const filterCommentsForThisPost = (comments, id)  => {
-     //console.log('comments',comments);
-     //console.log('id',id);
-     let filteredComments = comments.filter((comment)=> (comment.parentId===id) );
-     //console.log('filteredComments',filteredComments.length, filteredComments);
-     return filteredComments;
-  }
+
+
+const filterCommentsForThisPost = (comments, id)  => {
+   console.log('comments',comments);
+   console.log('id',id);
+   let filteredComments = comments.filter((comment)=> (comment.parentId===id) );
+   //console.log('filteredComments',filteredComments.length, filteredComments);
+   return filteredComments;
+}
   
 const mapStateToProps = (state,ownProps) => {
   return {
@@ -69,6 +104,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     boundDeletePost: (post_id) => {
       console.log('deleting post:', post_id);
       dispatch(fetchDeletePost({post_id}));
+       if(ownProps.view==='full') {
+        ownProps.history.push('/');
+       }
       //dispatch(test('id-101'));
     }
   }

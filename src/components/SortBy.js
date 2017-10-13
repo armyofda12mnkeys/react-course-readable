@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import {changePostOrder} from '../actions/actions';
+import { changePostOrder } from '../actions/actions';
 
 class SortBy extends React.Component {
   render() {
