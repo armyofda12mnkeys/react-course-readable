@@ -6,21 +6,21 @@ import Post from './Post';
 //:category/:post_id
 class EditPostPage extends React.Component {
   
-  
+  handleSubmit(event) {
+    event.preventDefault();
+    alert('submitted');
+    //return false;
+  }
   render() {
     let post = this.props.post;
     
     return (
       <div className="edit-single-post-view">
         <h2>Edit Post</h2>
-      {
-        //not sure why this needed here for the ViewPostPage, can someone elaborate
-        post
-        ?
-        <Post key={post.id} post={post} view="full" />
-        : 
-        ''
-      }
+        <form onSubmit={this.handleSubmit}>
+          <input type="text" name="name" />
+          <input type="submit" name="submit_btn" />
+        </form>
       </div>
     );
   }
