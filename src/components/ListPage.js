@@ -10,15 +10,6 @@ import {postsHelperSort} from '../utils/helpers';
 class ListPage extends React.Component {
   
   componentDidMount() {
-    //get all post and categories for the state
-    //const {loadAllPosts, loadCategories} = this.props;
-    //loadCategories();
-    //loadAllPosts();
-
-    //this.props.boundChangeSort();
-    this.props.boundFetchGetPosts();//adds initial posts (and their comments) to state
-    this.props.boundFetchGetAllCategories();//adds initial categories to state
-    //console.log('app props', this.props);
   }
   componentWillUnmount() {
   }
@@ -68,22 +59,6 @@ function mapStateToProps({posts, comments, categories, ui}, ownProps) {
   
   return {posts, comments, categories, filteredPosts, category};
 }
-function mapDispatchToProps(dispatch, ownProps) {
-  return {
-    /*
-    boundChangeSort: () => { //not sure if need this, but adding in case need to figure this out
-      dispatch(test('id-101'))
-    },
-    */
-    boundFetchGetPosts: () => {
-      dispatch(fetchGetPosts(''));
-    },
-    boundFetchGetAllCategories: () => {
-      dispatch(fetchGetAllCategories());
-    },
-    
-  }
-}
 
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ListPage));
+export default withRouter(connect(mapStateToProps, null)(ListPage));
