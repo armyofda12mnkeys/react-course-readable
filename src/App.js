@@ -7,8 +7,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import ListPostsPage from './components/ListPostsPage';
 import ViewPostPage from './components/ViewPostPage';
-import EditPostPage from './components/EditPostPage';
-import AddPostPage from './components/AddPostPage';
+import AddEditPostPage from './components/AddEditPostPage';
 import {test, fetchGetPosts, fetchGetAllCategories} from './actions/actions';
 
 class App extends Component {
@@ -40,8 +39,8 @@ class App extends Component {
         
         <Route exact path="/:category?" component={ListPostsPage} />
         <Route exact path="/:category/:post_id" component={ViewPostPage} />
-        <Route exact path="/post/add" component={AddPostPage} />
-        <Route exact path="/:category/:post_id/edit" component={EditPostPage} />
+        <Route exact path="/post/add" component={AddEditPostPage} />
+        <Route exact path="/:category/:post_id/edit" component={AddEditPostPage} />
         
         
       </div>

@@ -7,7 +7,7 @@ import UpDownVoterPostContainer from './UpDownVoterPostContainer';
 import UpDownVoterCommentContainer from './UpDownVoterCommentContainer'; //see if can combine into 1 Container?
 import {Link, NavLink} from 'react-router-dom';
 import {fetchDeletePost} from '../actions/actions';
-
+import Timestamp from 'react-timestamp';
 
 class Post extends React.Component {  
   
@@ -26,6 +26,9 @@ class Post extends React.Component {
       <div className="post">
         <div className="post-id">
           <strong>id:</strong> {post.id}
+        </div>
+        <div className="post-date-created">
+          <strong>created:</strong> <Timestamp time={post.timestamp/1000} format='ago' includeDay />
         </div>
         <div className="post-title">
           <strong>title:</strong> {post.title}
@@ -66,6 +69,9 @@ class Post extends React.Component {
             <div className="comment" key={comment.id}>
               <div className="comment-id">
                 <strong>Comment id:</strong> {comment.id}
+              </div>
+              <div className="comment-date-created">
+                <strong>created:</strong> <Timestamp time={comment.timestamp/1000} format='ago' includeDay />
               </div>
               <div className="comment-author">
                 <strong>Comment author:</strong> {comment.author}

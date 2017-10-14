@@ -178,6 +178,26 @@ export function editPost ({id, title, body}) {
 		id, title, body
 	}
 };
+export function recievedEditPost ({updated_post}) {
+	return {
+		type: EDIT_POST,
+		updated_post
+	}
+};
+export function fetchEditPost({id, title, body, author, category}) {
+  console.log('post', id, title, body, author, category);
+  return function (dispatch, getState) {
+    //dispatch(requestVotePost());
+    
+    return ReadableAPI
+            .editPost(id, title, body, author, category)
+            .then(updated_post => {
+              console.log('updated_post',updated_post);
+              dispatch(recievedEditPost({updated_post}));              
+              dispatch(push('/'+category+'/'+id));
+            });
+  }
+};
 
 
 export function viewPost ({id}) {

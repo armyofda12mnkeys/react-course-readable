@@ -38,14 +38,7 @@ function posts(state = { isFetching: false, items: []}, action) {
         "items":  newpostitems
       };
       
-    case VIEW_POST:
-
-			return {
-        
-			};
-      
     case CREATE_POST:
-
 			return {
         ...state,
         "isFetching": false,
@@ -56,10 +49,18 @@ function posts(state = { isFetching: false, items: []}, action) {
 			};
       
     case EDIT_POST:
-
+      var newpostitems = state.items;
+      newpostitems = newpostitems.map((post) => {
+        if(post.id === action.updated_post.id){
+           return action.updated_post; //return the updated post instead (or change just the voteScore prop manually)
+        }
+        return post;
+      });
 			return {
-        
-			};
+         ...state,
+        "isFetching": false,
+        "items":  newpostitems
+      };
       
     case DELETE_POST:
       if(action.updated_post.deleted === true) { //doublecheck and make sure post got deleted from server response
