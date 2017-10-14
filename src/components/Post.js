@@ -8,10 +8,21 @@ import UpDownVoterCommentContainer from './UpDownVoterCommentContainer'; //see i
 import {Link, NavLink} from 'react-router-dom';
 import {fetchDeletePost} from '../actions/actions';
 import Timestamp from 'react-timestamp';
+import Modal from 'react-modal';
 
 class Post extends React.Component {  
-  
-
+  constructor(props) {
+    super(props);
+    this.state = {showCommentModal: false};
+    this.openModal = this.openModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);    
+  }
+  openModal() {
+    this.setState({showCommentModal: true});
+  }  
+  closeModal() {    
+    this.setState({showCommentModal: false});
+  }
   render() {
     let post = this.props.post;
     console.log('post...',post);
@@ -84,12 +95,23 @@ class Post extends React.Component {
               </div>
               <UpDownVoterCommentContainer id={comment.id} type="comment" />
               
-              <button onClick={()=>{ alert('Edit Comment'); }}>Edit Comment</button>
+              <button onClick={()=>{ this.openModal(); }}>Edit Comment</button>
               <button onClick={()=>{ alert('Delete Comment'); }}>Delete Comment</button>
             </div>
           ))}
-          <button onClick={()=>{ alert('Add new Comment'); }}>Add New Comment</button>
+          <button onClick={()=>{ this.openModal(); }}>Add New Comment</button>
+          
+          <Modal
+            isOpen={ this.state.showCommentModal }
+            contentLabel="Add/Edit Comment"
+            shouldCloseOnOverlayClick={true}
+          >
+            <h1>Add/Edit Comment</h1>
+            <p>Etc.</p>
+            <button onClick={this.closeModal}>Cancel and close modal</button>
+          </Modal>
         </div>
+
         :
         ''
         }

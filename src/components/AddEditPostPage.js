@@ -8,7 +8,6 @@ import { LinkedComponent } from 'valuelink';
 import { Input, Select } from 'valuelink/tags';
 const uuidv4 = require('uuid/v4');
 
-
 //:category/:post_id
 class AddEditPostPage extends LinkedComponent {
   constructor(props) {
@@ -114,7 +113,7 @@ class AddEditPostPage extends LinkedComponent {
             :
             ''
           }
-          
+          <input type="button" name="cancel_btn" value="Cancel" onClick={()=>alert('cancel')}/>
           <input type="submit" name="submit_btn" value="Save" />
         </form>
       </div>
