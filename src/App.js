@@ -38,8 +38,8 @@ class App extends Component {
         
         <Route exact path="/:category?" component={ListPostsPage} />
         <Route exact path="/:category/:post_id" component={ViewPostPage} />
-        <Route exact path="/post/add" component={AddEditPostPage} />
-        <Route exact path="/:category/:post_id/edit" component={AddEditPostPage} />
+        <Route exact path="/post/add"                render={() => <AddEditPostPage context="add"  />} />
+        <Route exact path="/:category/:post_id/edit" render={() => <AddEditPostPage context="edit" />} />
         
         
       </div>

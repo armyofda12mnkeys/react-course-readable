@@ -12,9 +12,8 @@ const uuidv4 = require('uuid/v4');
 class AddEditPostPage extends LinkedComponent {
   constructor(props) {
     super(props);
-    this.state = {id: '', title: '', body: '', author: '', category: 'redux', 'editing': false};
+    this.state = {id: '', title: '', body: '', author: '', category: 'redux'};
     
-    //this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
   componentDidMount() {
@@ -27,20 +26,14 @@ class AddEditPostPage extends LinkedComponent {
       const post = getPost(post_id)
                     .then( (post) => {
                         //console.log('MOUNT2', post);      
-                        this.setState({id: post.id, 'title': post.title, 'body': post.body, 'author': post.author, 'category': post.category, 'editing': true});
+                        this.setState({'id': post.id, 'title': post.title, 'body': post.body, 'author': post.author, 'category': post.category});
                       }
                     );      
     } else {
       //implied since constructor already set default empty state
       //this.setState({'title': '', 'body': '', 'author': '', 'category': ''});
     }
-    
-    
-    
-  }
-  handleChange(event) {
-    this.setState({category: event.target.value});
-    alert('changed select to: '+ event.target.value);
+
   }
   handleSubmit(event) {
     event.preventDefault();
@@ -50,7 +43,7 @@ class AddEditPostPage extends LinkedComponent {
     let author = this.state.author;
     let category = this.state.category;
 
-    if(this.state.editing === true) {
+    if(this.props.context === 'edit') {
       let id = this.state.id;
       this.props.boundEditPost(id,              title, body, author, category);
     } else {
@@ -66,11 +59,13 @@ class AddEditPostPage extends LinkedComponent {
     //let post = this.props.post;
     const linked = this.linkAll();
     const categories = this.props.categories;
+    const id = this.state.id;
+    const category = this.state.category;
     
     return (
       <div className="add-single-post-view">
          {
-            this.state.editing === true
+            this.props.context === 'edit'
             ?
             <h2>Edit Post</h2>
             :
@@ -100,7 +95,7 @@ class AddEditPostPage extends LinkedComponent {
           </div>
           
           {
-            this.state.editing === true
+            this.props.context === 'edit'
             ?            
             <div className="edit-review">
               <strong>If editing, please review the changes below before clicking <u>Save</u> button:</strong>
@@ -114,9 +109,9 @@ class AddEditPostPage extends LinkedComponent {
             ''
           }
           {
-            this.state.editing === true
+            this.props.context === 'edit'
             ?           
-            <button onClick={(event)=>{ event.preventDefault(); window.location.href = '/'; }}>Cancel</button>
+            <button onClick={(event)=>{ event.preventDefault(); window.location.href = '/'+this.state.category+'/'+this.state.id; }}>Cancel</button>
             :
             <button onClick={(event)=>{ event.preventDefault(); window.location.href = '/'; }}>Cancel</button>          
           }
