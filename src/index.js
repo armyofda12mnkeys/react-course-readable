@@ -4,7 +4,7 @@ import './index.css';
 import App from './App';
 //import store from './store';
 import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
+//import { BrowserRouter } from 'react-router-dom';
 import registerServiceWorker from './registerServiceWorker';
 //import {createPost} from './actions';
 //import * as ReadableAPI from './utils/ReadableAPI';

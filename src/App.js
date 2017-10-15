@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
-import {Route, Link, NavLink} from 'react-router-dom'
+import {Route, NavLink} from 'react-router-dom'
 //import * as ReadableAPI from './utils/ReadableAPI';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import ListPostsPage from './components/ListPostsPage';
 import ViewPostPage from './components/ViewPostPage';
 import AddEditPostPage from './components/AddEditPostPage';
-import {test, fetchGetPosts, fetchGetAllCategories} from './actions/actions';
+import {fetchGetPosts, fetchGetAllCategories} from './actions/actions';
 
 class App extends Component {
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import Post from './Post';
+//import Post from './Post';
 import { fetchCreatePost, fetchEditPost } from '../actions/actions';
 import { getPost } from '../utils/ReadableAPI';
 import { LinkedComponent } from 'valuelink';
@@ -21,7 +21,7 @@ class AddEditPostPage extends LinkedComponent {
   
     //let category = this.props.match.params.category || '';
     let post_id  = this.props.match.params.post_id || '';
-    if(post_id && post_id!='') {
+    if(post_id && post_id!=='') {
       //console.log('MOUNT', post_id);      
       //get post details and then set state here
       const post = getPost(post_id)

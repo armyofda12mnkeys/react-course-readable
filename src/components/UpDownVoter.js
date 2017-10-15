@@ -1,9 +1,8 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+//import { connect } from 'react-redux';
+//import { withRouter } from 'react-router-dom';
 import FaArrowUp from 'react-icons/lib/fa/arrow-up';
 import FaArrowDown from 'react-icons/lib/fa/arrow-down';
-import { fetchVotePost, test } from '../actions/actions';
 
 class UpDownVoter extends React.Component {
   render() {

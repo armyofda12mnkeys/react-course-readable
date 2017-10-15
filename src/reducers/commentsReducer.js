@@ -9,16 +9,17 @@ import {
 
 
 function comments (state = { ifFetching: false, items: []}, action) {
+  
   switch(action.type) {
     
     
-    case REQUEST_GET_COMMENTS_FOR_POST:
+    case REQUEST_GET_COMMENTS_FOR_POST: {
 			return {
         ...state,
         "isFetching": true
 			};
-      
-    case RECEIVE_GET_COMMENTS_FOR_POST:
+    }  
+    case RECEIVE_GET_COMMENTS_FOR_POST: {
       //console.log('actioncomments', action.comments);
       //let newarray = [...state["items"], ...action.comments];      
 			return {
@@ -30,8 +31,8 @@ function comments (state = { ifFetching: false, items: []}, action) {
         ] 
 			};
 
-      
-    case CREATE_COMMENT:
+    }
+    case CREATE_COMMENT: {
 
 			return {
         ...state,
@@ -41,8 +42,8 @@ function comments (state = { ifFetching: false, items: []}, action) {
           action.comment
         ]
 			};
-      
-    case EDIT_COMMENT:
+    }
+    case EDIT_COMMENT: {
 
 			return {
         ...state,
@@ -52,10 +53,10 @@ function comments (state = { ifFetching: false, items: []}, action) {
           action.comment
         ]
 			};
-      
-    case VIEW_COMMENT:
+    }
+    case VIEW_COMMENT: {
 
-      var newcommentitems = state.items;
+      let newcommentitems = state.items;
       newcommentitems = newcommentitems.map((comment)=> {
         if(comment.id === action.updated_comment.id){
            return action.updated_comment; //return the updated post instead (or change just the voteScore prop manually)
@@ -67,10 +68,10 @@ function comments (state = { ifFetching: false, items: []}, action) {
         "isFetching": false,
         "items":  newcommentitems
       };
-      
-    case VOTE_COMMENT:
+    }
+    case VOTE_COMMENT: {
 
-      var newcommentitems = state.items;
+      let newcommentitems = state.items;
       newcommentitems = newcommentitems.map((comment) => {
         if(comment.id === action.updated_comment.id){
            return action.updated_comment; //return the updated post instead (or change just the voteScore prop manually)
@@ -82,22 +83,20 @@ function comments (state = { ifFetching: false, items: []}, action) {
         "isFetching": false,
         "items":  newcommentitems
       };
-    case DELETE_COMMENTS_FOR_POST:    
+    }
+    case DELETE_COMMENTS_FOR_POST: {
     
-      var newcommentitems = state.items;
-      newcommentitems = newcommentitems.filter((comment)=> {
-        if(comment.parentId !== action.post_id){
-           return comment; //return this comment if not equal to the one to delete
-        }
-      });
+      let newcommentitems = state.items;
+      newcommentitems = newcommentitems.filter( (comment)=> (comment.parentId !== action.post_id) );
       
 			return {
         ...state,
         "items": newcommentitems
 			};
-      
-		default:
+    }
+		default: {
 			return state;
+    }
   }
 };
 

@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 //import UpDownVoter from './UpDownVoter';
 import UpDownVoterPostContainer from './UpDownVoterPostContainer';
 import UpDownVoterCommentContainer from './UpDownVoterCommentContainer'; //see if can combine into 1 Container?
-import {Link, NavLink} from 'react-router-dom';
+//import {Link, NavLink} from 'react-router-dom';
 import {fetchDeletePost} from '../actions/actions';
 import Timestamp from 'react-timestamp';
 import Modal from 'react-modal';

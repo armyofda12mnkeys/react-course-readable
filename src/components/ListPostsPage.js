@@ -1,8 +1,7 @@
 import  React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import {Route, Link, NavLink} from 'react-router-dom';
-import {test, fetchGetPosts, fetchGetAllCategories} from '../actions/actions';
+import {NavLink} from 'react-router-dom';
 import PostList from './PostList';
 import SortBy from './SortBy';
 import {postsHelperSort} from '../utils/helpers';
@@ -51,7 +50,7 @@ function mapStateToProps({posts, comments, categories, ui}, ownProps) {
   let category = ownProps.match.params.category || ''; 
   let filteredPosts = {...posts};
   //filter by category or all posts
-  if(category!='') {
+  if(category!=='') {
     filteredPosts.items = filteredPosts.items.filter((post) => post.category===category );
   }
   //filter/sort the list by the sort by chosen
