@@ -12,14 +12,13 @@ export const RECEIVE_GET_COMMENTS_FOR_POST = 'RECEIVE_GET_COMMENTS_FOR_POST';
 
 export const CREATE_POST = 'CREATE_POST';
 export const EDIT_POST = 'EDIT_POST';
-export const VIEW_POST = 'VIEW_POST';
 export const VOTE_POST = 'VOTE_POST';
 export const DELETE_POST = 'DELETE_POST';
 
 export const CREATE_COMMENT = 'CREATE_COMMENT';
 export const EDIT_COMMENT = 'EDIT_COMMENT';
-export const VIEW_COMMENT = 'VIEW_COMMENT';
 export const VOTE_COMMENT = 'VOTE_COMMENT';
+export const DELETE_COMMENT = 'DELETE_COMMENT';
 export const DELETE_COMMENTS_FOR_POST = 'DELETE_COMMENTS_FOR_POST';
 
 
@@ -146,11 +145,6 @@ export function fetchVotePost({post_id, vote_option}) {
 
 
 
-
-
-
-
-/* POSTS */
 export function recievedCreatePost ({created_post}) {
 	return {
 		type: CREATE_POST,
@@ -172,12 +166,7 @@ export function fetchCreatePost({id, timestamp, title, body, author, category}) 
   }
 };
 
-export function editPost ({id, title, body}) {
-	return {
-		type: EDIT_POST,
-		id, title, body
-	}
-};
+
 export function recievedEditPost ({updated_post}) {
 	return {
 		type: EDIT_POST,
@@ -200,13 +189,6 @@ export function fetchEditPost({id, title, body, author, category}) {
 };
 
 
-export function viewPost ({id}) {
-	return {
-		type: VIEW_POST,
-		id
-	}
-};
-
 
 
 export function recievedDeletePost ({updated_post}) {
@@ -225,7 +207,7 @@ export function fetchDeletePost({post_id, view}) {
             .then(updated_post => {
               console.log('updated_post',updated_post);
               dispatch(recievedDeletePost({updated_post}));
-              dispatch(deleteCommentsForPost({'post_id': updated_post.id}));
+              dispatch(deleteCommentsForPost({'post_id': updated_post.id})); //api will remove these comments automatically from server, but we need to remove from state then too
               if(view==='full'){
                 dispatch(push('/')); //not working??? maybe fixed with 5.alpha version of redux-router
               }
@@ -247,13 +229,6 @@ export function editComment ({id, timestamp, body}) {
 	return {
 		type: EDIT_COMMENT,
 		id, timestamp, body
-	}
-};
-
-export function viewComment ({id}) {
-	return {
-		type: VIEW_COMMENT,
-		id
 	}
 };
 
@@ -282,4 +257,24 @@ export function deleteCommentsForPost ({post_id}) {
 		type: DELETE_COMMENTS_FOR_POST,
 		post_id
 	}
+};
+
+export function recievedDeleteComment ({updated_comment}) {
+	return {
+		type: DELETE_COMMENT,
+		updated_comment
+	}
+};
+export function fetchDeleteComment({comment_id}) {
+  console.log('comment_id'+ comment_id);
+  return function (dispatch, getState) {
+    //dispatch(requestVotePost());
+    
+    return ReadableAPI
+            .deleteComment(comment_id)
+            .then(updated_comment => {
+              console.log('updated_comment',updated_comment);
+              dispatch(recievedDeleteComment({updated_comment}));
+            });
+  }
 };

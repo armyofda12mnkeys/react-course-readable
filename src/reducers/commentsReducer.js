@@ -2,8 +2,8 @@ import {
   REQUEST_GET_COMMENTS_FOR_POST, RECEIVE_GET_COMMENTS_FOR_POST,
 	CREATE_COMMENT, 
 	EDIT_COMMENT,
-  VIEW_COMMENT,
   VOTE_COMMENT,
+  DELETE_COMMENT,
   DELETE_COMMENTS_FOR_POST
 } from '../actions/actions';
 
@@ -54,21 +54,6 @@ function comments (state = { ifFetching: false, items: []}, action) {
         ]
 			};
     }
-    case VIEW_COMMENT: {
-
-      let newcommentitems = state.items;
-      newcommentitems = newcommentitems.map((comment)=> {
-        if(comment.id === action.updated_comment.id){
-           return action.updated_comment; //return the updated post instead (or change just the voteScore prop manually)
-        }
-        return comment;
-      });
-			return {
-         ...state,
-        "isFetching": false,
-        "items":  newcommentitems
-      };
-    }
     case VOTE_COMMENT: {
 
       let newcommentitems = state.items;
@@ -84,6 +69,29 @@ function comments (state = { ifFetching: false, items: []}, action) {
         "items":  newcommentitems
       };
     }
+    case DELETE_COMMENT: {
+
+      if(action.updated_comment.deleted === true) { //doublecheck and make sure post got deleted from server response
+        let newcommentitems = state.items;
+        newcommentitems = newcommentitems.filter( (comment) => (comment.id !== action.updated_comment.id) );
+        
+        return {
+           ...state,
+          "isFetching": false,
+          "items":  newcommentitems
+        };
+      } else { //some issue with deleting from server maybe
+        return state;
+      }
+			return {
+        ...state,
+        "isFetching": false,
+        "items":  [
+          ...state["items"],
+          action.comment
+        ]
+			};
+    }    
     case DELETE_COMMENTS_FOR_POST: {
     
       let newcommentitems = state.items;

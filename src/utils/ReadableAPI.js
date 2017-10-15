@@ -11,24 +11,6 @@ const headers = {
   'Authorization': 'anything',
   'Content-Type': 'application/json'  
 }
-/*
-GET /categories
-GET /:category/posts
-
-GET /posts
-POST /posts
-GET /posts/:id
-POST /posts/:id
-PUT /posts/:id
-DELETE /posts/:id   Sets the parentDeleted flag for all child comments to 'true'.???
-
-GET /posts/:id/comments
-POST /comments
-GET /comments/:id
-POST /comments/:id
-PUT /comments/:id
-DELETE /comments/:id
-*/
 
 
 export const getAllCategories = () => {
@@ -46,6 +28,8 @@ export const getPosts = (id) => {
   }  
 };
     
+    
+
 export const createPost = (id, timestamp, title, body, author, category) =>
   fetch(`${url}/posts`, {
     method: 'POST',
@@ -56,13 +40,6 @@ export const createPost = (id, timestamp, title, body, author, category) =>
 export const getPost = (id) =>
   fetch(`${url}/posts/${id}`, { headers })
     .then(res => res.json());  
-    
-export const votePost = (id, option) =>
-  fetch(`${url}/posts/${id}`, {
-    method: 'POST',
-    headers: headers,
-    body: JSON.stringify({ option })
-  }).then(res => res.json());
     
 export const editPost = (id, title, body, author, category) =>
   fetch(`${url}/posts/${id}`, {
@@ -77,10 +54,17 @@ export const deletePost = (id) =>
     headers: headers 
   }).then(res => res.json());  
       
-    
-    
-    
-    
+export const votePost = (id, option) =>
+  fetch(`${url}/posts/${id}`, {
+    method: 'POST',
+    headers: headers,
+    body: JSON.stringify({ option })
+  }).then(res => res.json());
+
+  
+  
+  
+
 export const getCommentsForPost = (id) =>
   fetch(`${url}/posts/${id}/comments`, { headers })
     .then(res => res.json());
@@ -96,13 +80,6 @@ export const addCommentToPost = (id, timestamp, body, author, parentId) =>
     body: JSON.stringify({ id, timestamp, body, author, parentId })
   }).then(res => res.json());
 
-export const voteComment = (id, option) =>
-  fetch(`${url}/comments/${id}`, {
-    method: 'POST',
-    headers: headers,
-    body: JSON.stringify({ option })
-  }).then(res => res.json());
-    
 export const editComment = (id, timestamp, body) =>
   fetch(`${url}/comments/${id}`, {
     method: 'PUT',
@@ -111,8 +88,15 @@ export const editComment = (id, timestamp, body) =>
   }).then(res => res.json());   
     
 export const deleteComment = (id) =>
-  fetch(`${url}/posts/${id}`, {
+  fetch(`${url}/comments/${id}`, {
     method: 'DELETE',
     headers: headers
   }).then(res => res.json());  
+    
+export const voteComment = (id, option) =>
+  fetch(`${url}/comments/${id}`, {
+    method: 'POST',
+    headers: headers,
+    body: JSON.stringify({ option })
+  }).then(res => res.json());
     

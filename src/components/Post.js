@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom';
 import UpDownVoterPostContainer from './UpDownVoterPostContainer';
 import UpDownVoterCommentContainer from './UpDownVoterCommentContainer'; //see if can combine into 1 Container?
 //import {Link, NavLink} from 'react-router-dom';
-import {fetchDeletePost} from '../actions/actions';
+import {fetchDeletePost,fetchDeleteComment} from '../actions/actions';
 import Timestamp from 'react-timestamp';
 import Modal from 'react-modal';
 
@@ -31,7 +31,7 @@ class Post extends React.Component {
     let comment_count = post_comments && post_comments.length;
     console.log('render',post_comments);
     let boundDeletePost = this.props.boundDeletePost;
-    
+    let boundDeleteComment = this.props.boundDeleteComment;
     
     return (
       <div className="post">
@@ -96,7 +96,7 @@ class Post extends React.Component {
               <UpDownVoterCommentContainer id={comment.id} type="comment" />
               
               <button onClick={()=>{ this.openModal(); }}>Edit Comment</button>
-              <button onClick={()=>{ alert('Delete Comment'); }}>Delete Comment</button>
+              <button onClick={()=>{ boundDeleteComment(comment.id); }}>Delete Comment</button>
             </div>
           ))}
           <button onClick={()=>{ this.openModal(); }}>Add New Comment</button>
@@ -107,7 +107,10 @@ class Post extends React.Component {
             shouldCloseOnOverlayClick={true}
           >
             <h1>Add/Edit Comment</h1>
-            <p>Etc.</p>
+            
+            
+            
+             return <input type="text" name="title" value="Mr." />
             <button onClick={this.closeModal}>Cancel and close modal</button>
           </Modal>
         </div>
@@ -146,7 +149,15 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         ownProps.history.push('/');
        }*/
       //dispatch(test('id-101'));
-    }
+    },
+    boundDeleteComment: (comment_id) => {
+      console.log('deleting comment:', comment_id);
+      dispatch(fetchDeleteComment({comment_id}));
+       /*if(ownProps.view==='full') {
+        ownProps.history.push('/');
+       }*/
+      //dispatch(test('id-101'));
+    },
   }
 };
 

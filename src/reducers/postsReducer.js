@@ -24,20 +24,6 @@ function posts(state = { isFetching: false, items: []}, action) {
         "items":  action.posts
 			};
     }
-    case VOTE_POST: {
-      let newpostitems = state.items;
-      newpostitems = newpostitems.map((post) => {
-        if(post.id === action.updated_post.id){
-           return action.updated_post; //return the updated post instead (or change just the voteScore prop manually)
-        }
-        return post;
-      });
-			return {
-         ...state,
-        "isFetching": false,
-        "items":  newpostitems
-      };
-    } 
     case CREATE_POST: {
 			return {
         ...state,
@@ -75,6 +61,20 @@ function posts(state = { isFetching: false, items: []}, action) {
       } else { //some issue with deleting from server maybe
         return state;
       }
+    }
+    case VOTE_POST: {
+      let newpostitems = state.items;
+      newpostitems = newpostitems.map((post) => {
+        if(post.id === action.updated_post.id){
+           return action.updated_post; //return the updated post instead (or change just the voteScore prop manually)
+        }
+        return post;
+      });
+			return {
+         ...state,
+        "isFetching": false,
+        "items":  newpostitems
+      };
     } 
 		default: {
 			return state;

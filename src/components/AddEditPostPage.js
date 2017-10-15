@@ -101,8 +101,8 @@ class AddEditPostPage extends LinkedComponent {
           
           {
             this.state.editing === true
-            ?
-            <div class="edit-review">
+            ?            
+            <div className="edit-review">
               <strong>If editing, please review the changes below before clicking <u>Save</u> button:</strong>
               <br/>
               <div><strong>title:</strong> {this.state.title}</div>
@@ -113,7 +113,13 @@ class AddEditPostPage extends LinkedComponent {
             :
             ''
           }
-          <input type="button" name="cancel_btn" value="Cancel" onClick={()=>alert('cancel')}/>
+          {
+            this.state.editing === true
+            ?           
+            <button onClick={(event)=>{ event.preventDefault(); window.location.href = '/'; }}>Cancel</button>
+            :
+            <button onClick={(event)=>{ event.preventDefault(); window.location.href = '/'; }}>Cancel</button>          
+          }
           <input type="submit" name="submit_btn" value="Save" />
         </form>
       </div>
