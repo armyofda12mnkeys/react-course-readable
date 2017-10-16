@@ -80,11 +80,11 @@ export const addCommentToPost = (id, timestamp, body, author, parentId) =>
     body: JSON.stringify({ id, timestamp, body, author, parentId })
   }).then(res => res.json());
 
-export const editComment = (id, timestamp, body) =>
+export const editComment = (id, body, author) =>
   fetch(`${url}/comments/${id}`, {
     method: 'PUT',
     headers: headers,
-    body: JSON.stringify({ timestamp, body })
+    body: JSON.stringify({ body, author })
   }).then(res => res.json());   
     
 export const deleteComment = (id) =>

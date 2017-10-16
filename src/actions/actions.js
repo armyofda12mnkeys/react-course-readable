@@ -24,11 +24,21 @@ export const DELETE_COMMENTS_FOR_POST = 'DELETE_COMMENTS_FOR_POST';
 
 export const CHANGE_POST_LIST_SORT_BY_ORDER = 'CHANGE_POST_LIST_SORT_BY_ORDER';
 
+/* TEST action */
 export const TEST = 'TEST';
 export function test ({id}) {
 	return {
 		type: TEST,
 		id
+	}
+};
+
+
+/* UI */
+export function changePostOrder ({orderBy}) {
+	return {
+		type: CHANGE_POST_LIST_SORT_BY_ORDER,
+		order_by: orderBy
 	}
 };
 
@@ -57,14 +67,6 @@ export function fetchGetAllCategories() { //example from reduct: store.dispatch(
               dispatch(receiveGetAllCategories({categories: json.categories}));
             });
   }
-};
-
-/* UI */
-export function changePostOrder ({orderBy}) {
-	return {
-		type: CHANGE_POST_LIST_SORT_BY_ORDER,
-		order_by: orderBy
-	}
 };
 
 
@@ -123,27 +125,6 @@ export function fetchGetCommentsForPost({post_id}) {
   }
 };
 
-export function recievedVotePost ({updated_post}) {
-	return {
-		type: VOTE_POST,
-		updated_post
-	}
-};
-export function fetchVotePost({post_id, vote_option}) {
-  console.log('post'+ post_id +','+ vote_option);
-  return function (dispatch, getState) {
-    //dispatch(requestVotePost());
-    
-    return ReadableAPI
-            .votePost(post_id, vote_option)
-            .then(updated_post => {
-              console.log('updated_post',updated_post);
-              dispatch(recievedVotePost({updated_post}));              
-            });
-  }
-};
-
-
 
 export function recievedCreatePost ({created_post}) {
 	return {
@@ -189,8 +170,6 @@ export function fetchEditPost({id, title, body, author, category}) {
 };
 
 
-
-
 export function recievedDeletePost ({updated_post}) {
 	return {
 		type: DELETE_POST,
@@ -217,20 +196,71 @@ export function fetchDeletePost({post_id, view}) {
 };
 
 
-/* COMMENTS */
-export function createComment ({id, timestamp, body, author, parentId}) {
+export function recievedVotePost ({updated_post}) {
 	return {
-		type: CREATE_COMMENT,
-		id, timestamp, body, author, parentId
+		type: VOTE_POST,
+		updated_post
 	}
+};
+export function fetchVotePost({post_id, vote_option}) {
+  console.log('post'+ post_id +','+ vote_option);
+  return function (dispatch, getState) {
+    //dispatch(requestVotePost());
+    
+    return ReadableAPI
+            .votePost(post_id, vote_option)
+            .then(updated_post => {
+              console.log('updated_post',updated_post);
+              dispatch(recievedVotePost({updated_post}));              
+            });
+  }
 };
 
-export function editComment ({id, timestamp, body}) {
+
+
+
+/* COMMENTS */
+export function recievedCreateComment ({created_comment}) {
 	return {
-		type: EDIT_COMMENT,
-		id, timestamp, body
+		type: CREATE_COMMENT,
+		created_comment
 	}
 };
+export function fetchCreateComment({comment_id, timestamp, body, author, parentId}) {
+  console.log('comment'+ comment_id);
+  return function (dispatch, getState) {
+    //dispatch(requestVotePost());
+    
+    return ReadableAPI
+            .addCommentToPost(comment_id, timestamp, body, author, parentId)
+            .then(created_comment => {
+              console.log('created_comment',created_comment);
+              dispatch(recievedCreateComment({created_comment}));              
+            });
+  }
+};
+
+
+export function recievedEditComment ({updated_comment}) {
+	return {
+		type: EDIT_COMMENT,
+		updated_comment
+	}
+};
+export function fetchEditComment({comment_id, body, author}) {
+  console.log('comment'+ comment_id);
+  return function (dispatch, getState) {
+    //dispatch(requestVotePost());
+    
+    return ReadableAPI
+            .editComment(comment_id, body, author)
+            .then(updated_comment => {
+              console.log('updated_comment',updated_comment);
+              dispatch(recievedEditComment({updated_comment}));              
+            });
+  }
+};
+
 
 export function recievedVoteComment ({updated_comment}) {
 	return {
@@ -252,12 +282,6 @@ export function fetchVoteComment({comment_id, vote_option}) {
   }
 };
 
-export function deleteCommentsForPost ({post_id}) {
-	return {
-		type: DELETE_COMMENTS_FOR_POST,
-		post_id
-	}
-};
 
 export function recievedDeleteComment ({updated_comment}) {
 	return {
@@ -278,3 +302,12 @@ export function fetchDeleteComment({comment_id}) {
             });
   }
 };
+
+
+export function deleteCommentsForPost ({post_id}) {
+	return {
+		type: DELETE_COMMENTS_FOR_POST,
+		post_id
+	}
+};
+

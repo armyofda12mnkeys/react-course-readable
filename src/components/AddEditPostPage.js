@@ -6,6 +6,7 @@ import { fetchCreatePost, fetchEditPost } from '../actions/actions';
 import { getPost } from '../utils/ReadableAPI';
 import { LinkedComponent } from 'valuelink';
 import { Input, Select } from 'valuelink/tags';
+//import {UUID} from "uuid";
 const uuidv4 = require('uuid/v4');
 
 //:category/:post_id
@@ -47,7 +48,7 @@ class AddEditPostPage extends LinkedComponent {
       let id = this.state.id;
       this.props.boundEditPost(id,              title, body, author, category);
     } else {
-      let id = uuidv4('v4');
+      let id = uuidv4(); //UUID.v4();
       let timestamp = Date.now();
       this.props.boundCreatePost(id, timestamp, title, body, author, category);
     }    

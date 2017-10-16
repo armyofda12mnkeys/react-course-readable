@@ -39,22 +39,11 @@ function comments (state = { ifFetching: false, items: []}, action) {
         "isFetching": false,
         "items":  [
           ...state["items"],
-          action.comment
+          action.created_comment
         ]
 			};
     }
     case EDIT_COMMENT: {
-
-			return {
-        ...state,
-        "isFetching": false,
-        "items":  [
-          ...state["items"],
-          action.comment
-        ]
-			};
-    }
-    case VOTE_COMMENT: {
 
       let newcommentitems = state.items;
       newcommentitems = newcommentitems.map((comment) => {
@@ -83,15 +72,22 @@ function comments (state = { ifFetching: false, items: []}, action) {
       } else { //some issue with deleting from server maybe
         return state;
       }
+    }
+    case VOTE_COMMENT: {
+
+      let newcommentitems = state.items;
+      newcommentitems = newcommentitems.map((comment) => {
+        if(comment.id === action.updated_comment.id){
+           return action.updated_comment; //return the updated post instead (or change just the voteScore prop manually)
+        }
+        return comment;
+      });
 			return {
-        ...state,
+         ...state,
         "isFetching": false,
-        "items":  [
-          ...state["items"],
-          action.comment
-        ]
-			};
-    }    
+        "items":  newcommentitems
+      };
+    }
     case DELETE_COMMENTS_FOR_POST: {
     
       let newcommentitems = state.items;

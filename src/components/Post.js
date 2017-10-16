@@ -6,16 +6,26 @@ import { withRouter } from 'react-router-dom';
 import UpDownVoterPostContainer from './UpDownVoterPostContainer';
 import UpDownVoterCommentContainer from './UpDownVoterCommentContainer'; //see if can combine into 1 Container?
 //import {Link, NavLink} from 'react-router-dom';
-import {fetchDeletePost,fetchDeleteComment} from '../actions/actions';
+import {fetchDeletePost,fetchCreateComment, fetchEditComment, fetchDeleteComment } from '../actions/actions';
 import Timestamp from 'react-timestamp';
 import Modal from 'react-modal';
+import { LinkedComponent } from 'valuelink';
+import { Input } from 'valuelink/tags';
+//import {default as UUID} from "uuid";
+const uuidv4 = require('uuid/v4');
 
-class Post extends React.Component {  
+
+class Post extends LinkedComponent {  
   constructor(props) {
     super(props);
-    this.state = {showCommentModal: false};
+    this.state = {showCommentModal: false, id: '', body: '', author: ''};
+    
+    this.handleSubmitCommentModal = this.handleSubmitCommentModal.bind(this);    
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);    
+    this.addComment = this.addComment.bind(this);    
+    this.editComment = this.editComment.bind(this);    
+    
   }
   openModal() {
     this.setState({showCommentModal: true});
@@ -23,6 +33,43 @@ class Post extends React.Component {
   closeModal() {    
     this.setState({showCommentModal: false});
   }
+  addComment(){    
+    this.setState({id: '', body: '', author: ''});//i do at end of handleSubmitCommentModal, but doesn't hurt to do here too.
+    this.openModal();
+  }
+  editComment(comment_id){
+    this.setState({id: comment_id});
+    let filteredComment = this.props.post_comments.filter((comment)=> (comment.id===comment_id) );    
+    if(filteredComment && filteredComment.length > 0){
+      filteredComment = filteredComment[0]; //get 1st comment from array
+      this.setState({body: filteredComment.body, author: filteredComment.author});
+      //pre-populate the body and author and set the state for id
+      this.openModal();
+    } //else not sure why the comment wasn't found, so don't open modal
+  }
+  handleSubmitCommentModal(event) {
+    event.preventDefault();
+    let post_id = (this.props.post && this.props.post.id) || 0;
+    let body = this.state.body;
+    let author = this.state.author;
+    
+    if(this.state.id) { //editing a comment
+      let comment_id = this.state.id;      
+      this.props.boundEditComment(comment_id,           body, author);      
+      this.setState({showCommentModal: false, id: '', body: '', author: ''});
+      alert('comment edited!');
+    } else {
+      let comment_id = uuidv4(); //UUID.v4();
+      console.log('uuidv4',comment_id);
+      let timestamp = Date.now();
+      this.props.boundCreateComment(comment_id, timestamp, body, author);
+      this.setState({showCommentModal: false, id: '', body: '', author: ''});
+      alert('comment added!');
+    }
+  }
+  
+  
+  
   render() {
     let post = this.props.post;
     console.log('post...',post);
@@ -95,11 +142,11 @@ class Post extends React.Component {
               </div>
               <UpDownVoterCommentContainer id={comment.id} type="comment" />
               
-              <button onClick={()=>{ this.openModal(); }}>Edit Comment</button>
+              <button onClick={()=> { this.editComment(comment.id) }}>Edit Comment</button>
               <button onClick={()=>{ boundDeleteComment(comment.id); }}>Delete Comment</button>
             </div>
           ))}
-          <button onClick={()=>{ this.openModal(); }}>Add New Comment</button>
+          <button onClick={this.addComment}>Add New Comment</button>
           
           <Modal
             isOpen={ this.state.showCommentModal }
@@ -107,17 +154,23 @@ class Post extends React.Component {
             shouldCloseOnOverlayClick={true}
           >
             <h1>Add/Edit Comment</h1>
+            <form onSubmit={this.handleSubmitCommentModal}>
             
-            
-            
-             return <input type="text" name="title" value="Mr." />
-            <button onClick={this.closeModal}>Cancel and close modal</button>
+              Make comment on post: {post.id}
+              <div><strong>Comment Body:</strong> <Input valueLink={ this.linkAt('body') } /></div>
+              <div><strong>Comment Author:</strong> <Input valueLink={ this.linkAt('author') } /></div>
+                            
+              <button onClick={this.closeModal}>Cancel and close modal</button>
+              <input type="submit" name="submit_comment_btn" value="Submit" />
+              
+            </form>
           </Modal>
         </div>
 
         :
         ''
         }
+        
       </div>
     );
   }
@@ -131,7 +184,7 @@ const filterCommentsForThisPost = (comments, id)  => {
    console.log('filteredComments',filteredComments);
    return filteredComments;
 }
-  
+
 const mapStateToProps = (state,ownProps) => {
   console.log('comments-post',state.comments.items);
   console.log('comments-post',ownProps.post.id);
@@ -158,9 +211,17 @@ const mapDispatchToProps = (dispatch, ownProps) => {
        }*/
       //dispatch(test('id-101'));
     },
+    boundCreateComment: (comment_id, timestamp, body, author, parentId) => {
+      dispatch(fetchCreateComment({comment_id, timestamp, body, author, parentId: ownProps.post.id}));
+    },
+    boundEditComment: (comment_id,              body, author) => {
+      dispatch(fetchEditComment({comment_id, body, author}));
+    }
+    
   }
 };
-
+  
+  
 //export default Post;
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Post));
 /*
