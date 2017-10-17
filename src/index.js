@@ -23,7 +23,7 @@ const history = createHistory();
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(rootReducer,
   composeEnhancers(
-    applyMiddleware(thunk, routerMiddleware(history), logger) //
+    applyMiddleware(thunk, routerMiddleware(history), logger)
   )
 );
 
@@ -33,46 +33,6 @@ console.log('initial state:', store.getState());
 /*let unsubscribe = store.subscribe(() =>
   console.log('state change:',store.getState())
 );*/
-
-//########################################################################
-/*
-let api_data;
-api_data = ReadableAPI.getAllCategories()
-.then( (data) => {
-  console.log(data);
-}).catch(function(error) {
-	console.log('There has been a problem with your fetch operation: ' + error.message);
-});
-console.log( api_data );
-//##################
-api_data = ReadableAPI.getAllPostsInCategory('redux')
-.then( (data) => {
-  console.log(data);
-}).catch(function(error) {
-	console.log('There has been a problem with your fetch operation: ' + error.message);
-});
-console.log( api_data );
-//##################
-api_data = ReadableAPI.getAllPosts()
-.then( (data) => {
-  console.log(data);
-}).catch(function(error) {
-	console.log('There has been a problem with your fetch operation: ' + error.message);
-});
-console.log( api_data );
-//##################
-
-api_data = ReadableAPI.createPost()
-.then( (data) => {
-  console.log(data);
-}).catch(function(error) {
-	console.log('There has been a problem with your fetch operation: ' + error.message);
-});
-console.log( api_data );
-*/
-//########################################################################
-//store.dispatch(   createPost (1001, Date.now(), 'Title title', 'Body Body.', 'Arian', 'category')  );
-//########################################################################
 
 ReactDOM.render(<Provider store={store}>
                   <ConnectedRouter history={history}>
