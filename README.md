@@ -47,8 +47,6 @@ The rest of the app I think is separated pretty well.
           ├── postsReducer.js # for posts
           ├── uiReducer.js # for some ui state I wanted defined here (sortby setting)
           └── reducers.js # combined reducers (also adds routing as required for making things smooth for react-redux-router)
-    └── store
-          └── index.js # the store 
     └── utils
           ├── ReadableAPI.js # interface to the api
           └── helpers.js # right now just a helper sort func for SortBy
