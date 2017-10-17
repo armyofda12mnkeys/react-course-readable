@@ -35,6 +35,7 @@ class App extends Component {
         </header>
         
         <button onClick={()=>{ window.location.href = '/post/add'; }}>Add New Post</button>
+        <button onClick={()=>{ window.location.href = '/'; }}>Show all posts</button>
         
         <Route exact path="/:category?" component={ListPostsPage} />
         <Route exact path="/:category/:post_id" component={ViewPostPage} />

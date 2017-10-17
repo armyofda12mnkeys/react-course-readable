@@ -4,15 +4,13 @@ import Comment from './Comment';
 class CommentList extends React.Component {
 
   render() {
-    let comments = this.props.comments && [];
+    let comments = this.props.comments || [];
     
     return (
       <div className="comment-list">
-        {{ 
-          comments.map( (comment)=>{
-            <Comment commentId={comment.id} />
-          })
-        }}  
+        {comments && comments.map((comment) => (
+          <Comment comment={comment} editComment={this.props.editComment} deleteComment={this.props.deleteComment}/>
+        ))}
       </div>
     );
   }
