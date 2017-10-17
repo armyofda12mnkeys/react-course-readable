@@ -30,7 +30,10 @@
 
 
 
-
+.react-loader {
+  text-align: center; 
+  margin: 0px auto;
+}
 
 .header-link{
   color: white;
@@ -48,7 +51,6 @@
   border: 5px solid green;
   margin: 5px;
 }
-.post button, 
-.comment button { 
+button { 
  margin: 10px;
 }

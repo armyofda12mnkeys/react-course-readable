@@ -52,14 +52,14 @@ class CommentListSectionContainer extends LinkedComponent {
       let comment_id = this.state.comment_modal_id;      
       this.props.boundEditComment(comment_id,           body, author);      
       this.setState({showCommentModal: false, comment_modal_id: '', comment_modal_body: '', comment_modal_author: ''});
-      alert('comment edited!');
+      alert('comment edited!');// eh would be cool to bind this to a then() based on boundEditComment... move to action?
     } else {
       let comment_id = uuidv4(); //UUID.v4();
       //console.log('uuidv4',comment_id);
       let timestamp = Date.now();
       this.props.boundCreateComment(comment_id, timestamp, body, author);
       this.setState({showCommentModal: false, comment_modal_id: '', comment_modal_body: '', comment_modal_author: ''});
-      alert('comment added!');
+      alert('comment added!');// eh would be cool to bind this to a then() based on boundCreateComment... move to action?
     }
   }
 

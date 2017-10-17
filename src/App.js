@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import './App.css';
 import {Route, NavLink} from 'react-router-dom'
-//import * as ReadableAPI from './utils/ReadableAPI';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import ListPostsPage from './components/ListPostsPage';
 import ViewPostPage from './components/ViewPostPage';
 import AddEditPostPage from './components/AddEditPostPage';
 import {fetchGetPosts, fetchGetAllCategories} from './actions/actions';
+import ReactLoading from 'react-loading';
+
 
 class App extends Component {
 
@@ -17,7 +18,7 @@ class App extends Component {
     //loadCategories();
     //loadAllPosts();
 
-    //this.props.boundChangeSort();
+    //this.props.boundChangeSort();    
     this.props.boundFetchGetPosts();//adds initial posts (and their comments) to state
     this.props.boundFetchGetAllCategories();//adds initial categories to state
     //console.log('app props', this.props);
@@ -32,6 +33,12 @@ class App extends Component {
         <header className="App-header">
           {/*<img src={logo} className="App-logo" alt="logo" />*/}
           <NavLink className="header-link" to={"/"}><h1 className="App-title">Welcome to Readable</h1></NavLink>
+          {this.props.isFetching
+          ? 
+          <ReactLoading className="react-loader" type='cylon' height={50} width={100}/> 
+          : 
+          ''
+          }
         </header>
         
         <button onClick={()=>{ window.location.href = '/post/add'; }}>Add New Post</button>
@@ -48,6 +55,11 @@ class App extends Component {
   }
 }
 
+const mapStateToProps = (state,ownProps) => {
+  return {
+    isFetching:      state.posts.isFetching || state.comments.isFetching || state.categories.isFetching
+  }
+}
 
 
 function mapDispatchToProps(dispatch, ownProps) {
@@ -68,4 +80,4 @@ function mapDispatchToProps(dispatch, ownProps) {
 }
 
 
-export default withRouter(connect(null, mapDispatchToProps)(App));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
