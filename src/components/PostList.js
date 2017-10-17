@@ -10,7 +10,7 @@ class PostList extends React.Component {
     
     return (
       <div className="post-list-view">
-        Post Count:{filteredPosts.items.length}
+        <div><strong>Post Count:</strong> {filteredPosts.items.length}</div>
         {filteredPosts && filteredPosts.items.map((post) => (
             <Post key={post.id} post={post} view="teaser" />
         ))}

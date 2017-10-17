@@ -13,7 +13,7 @@ class SortBy extends React.Component {
           <option value='scoreAsc'>Sort by Score Asc</option>
           <option value='scoreDesc'>Sort by Score Desc</option>
         </select>
-        Sort By: {this.props.orderBy}
+        {/*Sort By: {this.props.orderBy}*/}
       </div>
     );
   }
@@ -21,7 +21,7 @@ class SortBy extends React.Component {
 
 
 function mapStateToProps({ui}, ownProps) {
-  console.log('uiOrderBy', ui.orderBy);
+  //console.log('uiOrderBy', ui.orderBy);
   let orderBy = ui.orderBy;
   return {orderBy};
 }

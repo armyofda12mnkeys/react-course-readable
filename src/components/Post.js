@@ -49,7 +49,7 @@ class Post extends LinkedComponent {
   }
   handleSubmitCommentModal(event) {
     event.preventDefault();
-    let post_id = (this.props.post && this.props.post.id) || 0;
+    //let post_id = (this.props.post && this.props.post.id) || 0;
     let body = this.state.body;
     let author = this.state.author;
     
@@ -60,7 +60,7 @@ class Post extends LinkedComponent {
       alert('comment edited!');
     } else {
       let comment_id = uuidv4(); //UUID.v4();
-      console.log('uuidv4',comment_id);
+      //console.log('uuidv4',comment_id);
       let timestamp = Date.now();
       this.props.boundCreateComment(comment_id, timestamp, body, author);
       this.setState({showCommentModal: false, id: '', body: '', author: ''});
@@ -72,50 +72,57 @@ class Post extends LinkedComponent {
   
   render() {
     let post = this.props.post;
-    console.log('post...',post);
+    //console.log('post...',post);
     //console.log('props',this.props.post.body);
     let post_comments = this.props.post_comments;
     let comment_count = post_comments && post_comments.length;
-    console.log('render',post_comments);
+    //console.log('render', post_comments);
     let boundDeletePost = this.props.boundDeletePost;
     let boundDeleteComment = this.props.boundDeleteComment;
     
     return (
       <div className="post">
+        { this.props.view==='full' 
+        ?
+        <h1>Viewing Post id: <span>{post.id}</span></h1>
+        :
         <div className="post-id">
-          <strong>id:</strong> {post.id}
+          <strong>Post id:</strong> {post.id}
         </div>
+        }
+
         <div className="post-date-created">
-          <strong>created:</strong> <Timestamp time={post.timestamp/1000} format='ago' includeDay />
+          <strong>Post created:</strong> <Timestamp time={post.timestamp/1000} format='ago' includeDay />
         </div>
         <div className="post-title">
-          <strong>title:</strong> {post.title}
+          <strong>Post title:</strong> {post.title}
         </div>
         <div className="post-body">
-          <strong>body:</strong> {post.body}
+          <strong>Post body:</strong> {post.body}
         </div>
         <div className="post-author">
-          <strong>author:</strong> {post.author}
+          <strong>Post author:</strong> {post.author}
         </div>
         <div className="post-category">
-          <strong>category:</strong> {post.category}
+          <strong>Post category:</strong> {post.category}
         </div>
         <div className="post-vote-score">
-          <strong>post vote score:</strong> {post.voteScore}
+          <strong>Post vote score:</strong> {post.voteScore}
         </div>
         <UpDownVoterPostContainer id={post.id} type="post" />
         <div className="post-comments-count">
           <strong># of comments:</strong> {comment_count}
         </div>
-        
-        <button onClick={()=>{ window.location.href = '/'+post.category+'/'+post.id+'/edit'; }}>Edit Post</button>
-        <button onClick={()=>{ boundDeletePost(post.id); }}>Delete Post</button>
+
         { this.props.view==='teaser' 
           ?          
           <button onClick={()=>{ window.location.href = '/'+post.category+'/'+post.id; }}>View Post</button>
           :
           ''
-        }
+        }        
+        <button onClick={()=>{ window.location.href = '/'+post.category+'/'+post.id+'/edit'; }}>Edit Post</button>
+        <button onClick={()=>{ boundDeletePost(post.id); }}>Delete Post</button>
+
         {/*or <Link to={post.category+'/'+post.id}>View</Link>*/}
                 
         { this.props.view==='full' 
@@ -129,14 +136,14 @@ class Post extends LinkedComponent {
                 <strong>Comment id:</strong> {comment.id}
               </div>
               <div className="comment-date-created">
-                <strong>created:</strong> <Timestamp time={comment.timestamp/1000} format='ago' includeDay />
+                <strong>Comment created:</strong> <Timestamp time={comment.timestamp/1000} format='ago' includeDay />
+              </div>
+              <div className="comment-body">
+                <strong>Comment body:</strong> {comment.body}
               </div>
               <div className="comment-author">
                 <strong>Comment author:</strong> {comment.author}
               </div>
-              <div className="comment-body">
-                <strong>Comment body:</strong> {comment.body}
-              </div>            
               <div className="comment-score">
                 <strong>Comment vote score:</strong> {comment.voteScore}
               </div>
@@ -161,7 +168,7 @@ class Post extends LinkedComponent {
               <div><strong>Comment Author:</strong> <Input valueLink={ this.linkAt('author') } /></div>
                             
               <button onClick={this.closeModal}>Cancel and close modal</button>
-              <input type="submit" name="submit_comment_btn" value="Submit" />
+              <button type="submit" name="submit_comment_btn" value="Save">Save</button>
               
             </form>
           </Modal>
@@ -181,13 +188,13 @@ const filterCommentsForThisPost = (comments, id)  => {
    //console.log('comments',comments);
    //console.log('id',id);
    let filteredComments = comments.filter((comment)=> (comment.parentId===id) );
-   console.log('filteredComments',filteredComments);
+   //console.log('filteredComments',filteredComments);
    return filteredComments;
 }
 
 const mapStateToProps = (state,ownProps) => {
-  console.log('comments-post',state.comments.items);
-  console.log('comments-post',ownProps.post.id);
+  //console.log('comments-post',state.comments.items);
+  //console.log('comments-post',ownProps.post.id);
   return {
     post_comments: filterCommentsForThisPost(state.comments.items, ownProps.post.id)
   }
@@ -196,7 +203,7 @@ const mapStateToProps = (state,ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     boundDeletePost: (post_id) => {
-      console.log('deleting post:', post_id);
+      //console.log('deleting post:', post_id);
       dispatch(fetchDeletePost({post_id, view: ownProps.view}));
        /*if(ownProps.view==='full') {
         ownProps.history.push('/');
@@ -204,12 +211,11 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       //dispatch(test('id-101'));
     },
     boundDeleteComment: (comment_id) => {
-      console.log('deleting comment:', comment_id);
+      //console.log('deleting comment:', comment_id);
       dispatch(fetchDeleteComment({comment_id}));
        /*if(ownProps.view==='full') {
         ownProps.history.push('/');
        }*/
-      //dispatch(test('id-101'));
     },
     boundCreateComment: (comment_id, timestamp, body, author, parentId) => {
       dispatch(fetchCreateComment({comment_id, timestamp, body, author, parentId: ownProps.post.id}));

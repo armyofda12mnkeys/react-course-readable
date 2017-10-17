@@ -20,7 +20,7 @@ class ListPostsPage extends React.Component {
     //filter posts based on SortBy dropdown state!
     let filteredPosts = this.props.filteredPosts;
     let categories = this.props.categories;
-    let category = this.props.category;
+    let category = this.props.category ? '#'+this.props.category : 'none';
     //console.log('posts',posts.items);
     //console.log('params',this.props.match.params);
     
@@ -38,7 +38,7 @@ class ListPostsPage extends React.Component {
         </div>
         {categories && categories.items.map((category) => (
           <div key={category.name}>
-            <NavLink to={category.path}>{category.name}</NavLink>
+            <NavLink to={category.path}>#{category.name}</NavLink>
           </div>
         ))}            
       </div>

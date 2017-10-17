@@ -40,8 +40,15 @@
   text-decoration: underline;
 }
 
-.post, .comment {  
-  border: 1px solid black;
+.post {  
+  border: 5px solid blue;
   margin: 5px;
 }
-
+.comment {  
+  border: 5px solid green;
+  margin: 5px;
+}
+.post button, 
+.comment button { 
+ margin: 10px;
+}

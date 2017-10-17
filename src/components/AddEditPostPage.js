@@ -24,12 +24,12 @@ class AddEditPostPage extends LinkedComponent {
     if(post_id && post_id!=='') {
       //console.log('MOUNT', post_id);      
       //get post details and then set state here
-      const post = getPost(post_id)
-                    .then( (post) => {
-                        //console.log('MOUNT2', post);      
-                        this.setState({'id': post.id, 'title': post.title, 'body': post.body, 'author': post.author, 'category': post.category});
-                      }
-                    );      
+      getPost(post_id)
+        .then( (post) => {
+            //console.log('MOUNT2', post);      
+            this.setState({'id': post.id, 'title': post.title, 'body': post.body, 'author': post.author, 'category': post.category});
+          }
+        );      
     } else {
       //implied since constructor already set default empty state
       //this.setState({'title': '', 'body': '', 'author': '', 'category': ''});
@@ -60,8 +60,8 @@ class AddEditPostPage extends LinkedComponent {
     //let post = this.props.post;
     const linked = this.linkAll();
     const categories = this.props.categories;
-    const id = this.state.id;
-    const category = this.state.category;
+    //const id = this.state.id;
+    //const category = this.state.category;
     
     return (
       <div className="add-single-post-view">
@@ -134,12 +134,12 @@ function mapStateToProps({categories}, ownProps) {
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     boundCreatePost: (id, timestamp, title, body, author, category) => { //not sure if need this, but adding in case need to figure this out
-      console.log('create post_id', id);      
+      //console.log('create post_id', id);      
       dispatch(fetchCreatePost({id, timestamp, title, body, author, category}));
       //dispatch(test('id-101'));
     },
     boundEditPost:   (id,            title, body, author, category) => { //not sure if need this, but adding in case need to figure this out
-      console.log('edit post_id', id);      
+      //console.log('edit post_id', id);      
       dispatch(fetchEditPost({id,    title, body, author, category}));
       //dispatch(test('id-101'));
     }

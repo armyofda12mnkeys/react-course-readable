@@ -14,6 +14,9 @@ export const CREATE_POST = 'CREATE_POST';
 export const EDIT_POST = 'EDIT_POST';
 export const VOTE_POST = 'VOTE_POST';
 export const DELETE_POST = 'DELETE_POST';
+export const CREATE_COMMENT_UPDATE_POST = 'CREATE_COMMENT_UPDATE_POST';
+export const DELETE_COMMENT_UPDATE_POST = 'DELETE_COMMENT_UPDATE_POST';
+
 
 export const CREATE_COMMENT = 'CREATE_COMMENT';
 export const EDIT_COMMENT = 'EDIT_COMMENT';
@@ -226,6 +229,12 @@ export function recievedCreateComment ({created_comment}) {
 		created_comment
 	}
 };
+export function recievedCreateCommentUpdatePost ({created_comment}) {
+	return {
+		type: CREATE_COMMENT_UPDATE_POST,
+		created_comment
+	}
+};
 export function fetchCreateComment({comment_id, timestamp, body, author, parentId}) {
   console.log('comment'+ comment_id);
   return function (dispatch, getState) {
@@ -236,6 +245,7 @@ export function fetchCreateComment({comment_id, timestamp, body, author, parentI
             .then(created_comment => {
               console.log('created_comment',created_comment);
               dispatch(recievedCreateComment({created_comment}));              
+              dispatch(recievedCreateCommentUpdatePost({created_comment}));              
             });
   }
 };
@@ -262,6 +272,36 @@ export function fetchEditComment({comment_id, body, author}) {
 };
 
 
+
+
+export function recievedDeleteComment ({updated_comment}) {
+	return {
+		type: DELETE_COMMENT,
+		updated_comment
+	}
+};
+export function recievedDeleteCommentUpdatePost ({updated_comment}) {
+	return {
+		type: DELETE_COMMENT_UPDATE_POST,
+		updated_comment
+	}
+};
+export function fetchDeleteComment({comment_id}) {
+  console.log('comment_id'+ comment_id);
+  return function (dispatch, getState) {
+    //dispatch(requestVotePost());
+    
+    return ReadableAPI
+            .deleteComment(comment_id)
+            .then(updated_comment => {
+              console.log('updated_comment',updated_comment);
+              dispatch(recievedDeleteComment({updated_comment}));
+              dispatch(recievedDeleteCommentUpdatePost({updated_comment}));
+            });
+  }
+};
+
+
 export function recievedVoteComment ({updated_comment}) {
 	return {
 		type: VOTE_COMMENT,
@@ -278,27 +318,6 @@ export function fetchVoteComment({comment_id, vote_option}) {
             .then(updated_comment => {
               console.log('updated_comment',updated_comment);
               dispatch(recievedVoteComment({updated_comment}));              
-            });
-  }
-};
-
-
-export function recievedDeleteComment ({updated_comment}) {
-	return {
-		type: DELETE_COMMENT,
-		updated_comment
-	}
-};
-export function fetchDeleteComment({comment_id}) {
-  console.log('comment_id'+ comment_id);
-  return function (dispatch, getState) {
-    //dispatch(requestVotePost());
-    
-    return ReadableAPI
-            .deleteComment(comment_id)
-            .then(updated_comment => {
-              console.log('updated_comment',updated_comment);
-              dispatch(recievedDeleteComment({updated_comment}));
             });
   }
 };

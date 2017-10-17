@@ -7,7 +7,7 @@ import FaArrowDown from 'react-icons/lib/fa/arrow-down';
 class UpDownVoter extends React.Component {
   render() {
     let id = this.props.id;
-    console.log('UpDownVoter id for type "'+this.props.type+'":', id);
+    //console.log('UpDownVoter id for type "'+this.props.type+'":', id);
     return (
       <div className="vote-score">
         <FaArrowUp color='green' onClick={()=>{ this.props.boundVote(id, 'upVote'); }} />

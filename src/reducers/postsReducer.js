@@ -3,7 +3,9 @@ import {
 	CREATE_POST, 
 	EDIT_POST,
   VOTE_POST,
-  DELETE_POST
+  DELETE_POST,
+  CREATE_COMMENT_UPDATE_POST,
+  DELETE_COMMENT_UPDATE_POST
 } from '../actions/actions';
 
 
@@ -76,6 +78,40 @@ function posts(state = { isFetching: false, items: []}, action) {
         "items":  newpostitems
       };
     } 
+    case CREATE_COMMENT_UPDATE_POST: {
+      let post_id_to_increment_comment_count = action.created_comment.parentId;
+      let newpostitems = state.items;
+      newpostitems = newpostitems.map((post) => {
+        if(post.id === post_id_to_increment_comment_count){
+          post.commentCount = post.commentCount + 1;
+          return post; //return the updated post instead (or change just the voteScore prop manually)
+        }
+        return post;
+      });   
+			return {
+         ...state,
+        "isFetching": false,
+        "items":  newpostitems
+      };      
+    }
+    case DELETE_COMMENT_UPDATE_POST: {
+      let post_id_to_decrement_comment_count = action.updated_comment.parentId;
+      let newpostitems = state.items;
+      newpostitems = newpostitems.map((post) => {
+        if(post.id === post_id_to_decrement_comment_count){
+          post.commentCount = post.commentCount - 1;
+          return post; //return the updated post instead (or change just the voteScore prop manually)
+        }
+        return post;
+      });    
+			return {
+         ...state,
+        "isFetching": false,
+        "items":  newpostitems
+      };
+    }
+    
+    
 		default: {
 			return state;
     }
