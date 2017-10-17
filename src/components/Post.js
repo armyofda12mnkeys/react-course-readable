@@ -173,7 +173,6 @@ class Post extends LinkedComponent {
             </form>
           </Modal>
         </div>
-
         :
         ''
         }

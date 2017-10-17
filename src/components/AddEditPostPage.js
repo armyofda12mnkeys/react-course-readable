@@ -64,13 +64,13 @@ class AddEditPostPage extends LinkedComponent {
     //const category = this.state.category;
     
     return (
-      <div className="add-single-post-view">
+      <div className="add--edit-single-post-view">
          {
             this.props.context === 'edit'
             ?
-            <h2>Edit Post</h2>
+            <h1>Edit Post id: {this.state.id}</h1>
             :
-            <h2>Add Post</h2>
+            <h1>Add Post</h1>
          }
         <form onSubmit={this.handleSubmit}>
           
@@ -116,7 +116,7 @@ class AddEditPostPage extends LinkedComponent {
             :
             <button onClick={(event)=>{ event.preventDefault(); window.location.href = '/'; }}>Cancel</button>          
           }
-          <input type="submit" name="submit_btn" value="Save" />
+          <button type="submit" name="submit_btn" value="Save">Save</button>
         </form>
       </div>
     );
