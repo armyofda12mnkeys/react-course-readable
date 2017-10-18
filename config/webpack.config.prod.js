@@ -256,7 +256,11 @@ module.exports = {
     // if (process.env.NODE_ENV === 'production') { ... }. See `./env.js`.
     // It is absolutely essential that NODE_ENV was set to production here.
     // Otherwise React will be compiled in the very slow development mode.
-    new webpack.DefinePlugin(env.stringified),
+    new webpack.DefinePlugin({
+      'NODE_ENV': env.stringified['process.env']['NODE_ENV'],
+      'PUBLIC_URL': env.stringified['process.env']['PUBLIC_URL'],
+      'API_URL': 'https://monk12-readable-server.herokuapp.com'
+    }),
     // Minify the code.
     new webpack.optimize.UglifyJsPlugin({
       compress: {
