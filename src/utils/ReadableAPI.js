@@ -1,4 +1,4 @@
-const url = "http://localhost:3001";
+const url = process.env.API_URL || "http://localhost:3001";
 
 
 // Generate a unique token for storing your bookshelf data on the backend server.
